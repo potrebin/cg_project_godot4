@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="CG project 2025"
+run/main_scene="uid://0amuxgdjaquy"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
