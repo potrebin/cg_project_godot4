@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://0amuxgdjaquy"]
+[gd_scene load_steps=12 format=3 uid="uid://0amuxgdjaquy"]
 
 [ext_resource type="Script" uid="uid://5dds33vgyqfv" path="res://camera_controller.gd" id="1_80nbo"]
-[ext_resource type="Shader" uid="uid://dep1fmyftuosx" path="res://ocean_shader.gdshader" id="2_e2o6t"]
+[ext_resource type="PackedScene" uid="uid://n73l5sq15pk8" path="res://ship.tscn" id="2_feb5d"]
+[ext_resource type="PackedScene" uid="uid://c6s5fo424lte7" path="res://player.tscn" id="3_fc0e3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mwb40"]
 sky_top_color = Color(0.050980393, 0.105882354, 0.16470589, 1)
@@ -18,18 +19,103 @@ sky_material = SubResource("ProceduralSkyMaterial_mwb40")
 background_mode = 2
 sky = SubResource("Sky_80nbo")
 ambient_light_source = 3
-ambient_light_color = Color(0.101960786, 0.15686275, 0.2509804, 1)
+ambient_light_color = Color(0.39313215, 0.38444668, 0.3714194, 1)
 ambient_light_sky_contribution = 0.2
-ambient_light_energy = 0.3
+ambient_light_energy = 3.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_mwb40"]
-size = Vector2(100, 100)
-subdivide_width = 128
-subdivide_depth = 128
+size = Vector2(1000, 1000)
+subdivide_width = 440
+subdivide_depth = 440
+
+[sub_resource type="Shader" id="Shader_80nbo"]
+code = "shader_type spatial;
+
+// Varying to pass vertex position to fragment/light shader
+varying vec3 world_pos;
+
+// Wave parameters
+uniform float wave_speed : hint_range(0.0, 5.0) = 1.0;
+uniform float wave_amplitude : hint_range(0.0, 2.0) = 0.3;
+uniform float wave_frequency : hint_range(0.1, 5.0) = 1.0;
+
+// Water appearance
+uniform vec3 water_color : source_color = vec3(0.04, 0.12, 0.24); // Dark blue for nighttime
+uniform vec3 deep_water_color : source_color = vec3(0.01, 0.05, 0.15); // Even darker for depth
+uniform float roughness : hint_range(0.0, 1.0) = 0.3;
+uniform float metallic : hint_range(0.0, 1.0) = 0.0;
+
+// Normal map strength
+uniform float normal_strength : hint_range(0.0, 2.0) = 1.0;
+
+// Moon reflection parameters
+uniform float reflection_strength : hint_range(0.0, 5.0) = 2.0;
+uniform float reflection_sharpness : hint_range(1.0, 256.0) = 32.0;
+uniform vec3 moon_color : source_color = vec3(1.0, 0.98, 0.9); // Warm white
+
+void vertex() {
+	// Store world position for use in fragment/light shader
+	world_pos = VERTEX;
+
+	// Create multiple overlapping sine waves for realistic ocean motion
+	float wave1 = sin(VERTEX.x * wave_frequency + TIME * wave_speed) * wave_amplitude;
+	float wave2 = cos(VERTEX.z * wave_frequency * 0.7 + TIME * wave_speed * 1.3) * wave_amplitude * 0.5;
+	float wave3 = sin((VERTEX.x + VERTEX.z) * wave_frequency * 0.5 + TIME * wave_speed * 0.8) * wave_amplitude * 0.3;
+
+	// Combine waves and apply to vertex height (Y)
+	VERTEX.y += wave1 + wave2 + wave3;
+
+	// Calculate wave normals for proper lighting
+	// This creates surface normals that follow the wave shape
+	float wave_dx = cos(VERTEX.x * wave_frequency + TIME * wave_speed) * wave_frequency * wave_amplitude;
+	wave_dx += -sin((VERTEX.x + VERTEX.z) * wave_frequency * 0.5 + TIME * wave_speed * 0.8) * wave_frequency * 0.5 * wave_amplitude * 0.3;
+
+	float wave_dz = -sin(VERTEX.z * wave_frequency * 0.7 + TIME * wave_speed * 1.3) * wave_frequency * 0.7 * wave_amplitude * 0.5;
+	wave_dz += -sin((VERTEX.x + VERTEX.z) * wave_frequency * 0.5 + TIME * wave_speed * 0.8) * wave_frequency * 0.5 * wave_amplitude * 0.3;
+
+	vec3 wave_normal = normalize(vec3(-wave_dx, 1.0, -wave_dz));
+	NORMAL = mix(NORMAL, wave_normal, normal_strength);
+}
+
+void fragment() {
+	// Base water color
+	ALBEDO = water_color;
+
+	// Water is not metallic
+	METALLIC = metallic;
+
+	// Moderate roughness for some specular highlights
+	ROUGHNESS = roughness;
+
+	// Slightly transparent for depth effect
+	ALPHA = 0.95;
+}
+
+void light() {
+	// Calculate moon reflection using Blinn-Phong specular model
+
+	// Get the halfway vector between light direction and view direction
+	vec3 half_vector = normalize(LIGHT + VIEW);
+
+	// Calculate specular reflection based on surface normal
+	float specular = pow(max(dot(NORMAL, half_vector), 0.0), reflection_sharpness);
+
+	// Add some variation based on wave movement for shimmer effect
+	float shimmer = sin(TIME * 2.0 + world_pos.x * 0.5) * 0.1 + 0.9;
+	specular *= shimmer;
+
+	// Apply moon color and strength to create the reflection
+	vec3 moon_reflection = moon_color * specular * reflection_strength;
+
+	// Add the reflection to the light contribution
+	// This creates the bright streak of moonlight on the water
+	DIFFUSE_LIGHT += moon_reflection;
+}
+"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_feb5d"]
 render_priority = 0
-shader = ExtResource("2_e2o6t")
+shader = SubResource("Shader_80nbo")
 shader_parameter/wave_speed = 1.0000000475
 shader_parameter/wave_amplitude = 0.30000001425
 shader_parameter/wave_frequency = 1.5000000679901202
@@ -57,7 +143,6 @@ rings = 16
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.9396926, 0.34202012, 0, -0.34202012, 0.9396926, 0, 8, 15)
-current = true
 script = ExtResource("1_80nbo")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -75,5 +160,10 @@ mesh = SubResource("PlaneMesh_mwb40")
 surface_material_override/0 = SubResource("ShaderMaterial_feb5d")
 
 [node name="Moon" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 30, -30)
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -179.90887, 299.32977, -311.47693)
 mesh = SubResource("SphereMesh_80nbo")
+
+[node name="Ship" parent="." instance=ExtResource("2_feb5d")]
+
+[node name="Player" parent="." instance=ExtResource("3_fc0e3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.381414, 6.381119)

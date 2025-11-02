@@ -4,7 +4,8 @@ extends Camera3D
 # Hold right mouse button and use WASD to fly around
 # Scroll wheel to change speed
 
-@export var move_speed := 5.0
+"""
+@export var move_speed := 20.0
 @export var look_sensitivity := 0.003
 @export var speed_scale := 1.0
 
@@ -62,3 +63,5 @@ func _process(delta):
 	if input_dir != Vector3.ZERO:
 		input_dir = input_dir.normalized()
 		position += input_dir * move_speed * speed_scale * delta
+
+"""

@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6s5fo424lte7"]
+
+[ext_resource type="Script" uid="uid://b8iisi37rvast" path="res://player.gd" id="1_4flbx"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sh265"]
+height = 4.5
+
+[node name="Player" type="CharacterBody3D"]
+floor_constant_speed = true
+floor_max_angle = 1.0471976
+floor_snap_length = 0.4
+script = ExtResource("1_4flbx")
+
+[node name="LookAround" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+
+[node name="Camera3D" type="Camera3D" parent="LookAround"]
+current = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
+shape = SubResource("CapsuleShape3D_sh265")
