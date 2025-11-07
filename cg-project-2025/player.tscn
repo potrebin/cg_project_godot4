@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://c6s5fo424lte7"]
+[gd_scene load_steps=4 format=3 uid="uid://c6s5fo424lte7"]
 
 [ext_resource type="Script" uid="uid://b8iisi37rvast" path="res://player.gd" id="1_4flbx"]
+[ext_resource type="Texture2D" uid="uid://1hoiwufd14dp" path="res://Sprites/pointer.png" id="2_onrkg"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sh265"]
 height = 4.5
@@ -14,9 +15,18 @@ script = ExtResource("1_4flbx")
 [node name="LookAround" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
 
+[node name="RayCast3D" type="RayCast3D" parent="LookAround"]
+target_position = Vector3(0, 0, -7)
+
 [node name="Camera3D" type="Camera3D" parent="LookAround"]
 current = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
 shape = SubResource("CapsuleShape3D_sh265")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Pointer" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(800, 450)
+texture = ExtResource("2_onrkg")

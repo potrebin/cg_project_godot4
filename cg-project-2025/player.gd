@@ -1,6 +1,7 @@
 extends CharacterBody3D
 
 @onready var LookAround = $LookAround
+@onready var raycast = $LookAround/RayCast3D
 
 var movement_speed = 380
 var fall_speed = -50  # negative
@@ -38,6 +39,15 @@ func _physics_process(delta: float) -> void:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	if Input.is_action_just_pressed("click_l"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
+	if Input.is_action_just_pressed("interact"):
+		if raycast.is_colliding():
+			var target = raycast.get_collider()
+			if target.is_in_group("door"):
+				if target.is_open:
+					target.close()
+				else:
+					target.open()
 	
 	move_and_slide()
 

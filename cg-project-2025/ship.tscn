@@ -81,13 +81,15 @@ size = Vector3(6.553711, 2.7036133, 0.80029297)
 size = Vector3(6.645508, 1, 4.288147)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_v2ti4"]
-size = Vector3(4.196289, 2.1669312, 1)
+size = Vector3(4.196289, 2.9779968, 1)
 
 [node name="Ship" type="Node3D"]
 
 [node name="ship_body" parent="." instance=ExtResource("1_l3rv8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.03601408, 3.8146973e-06, 0.0049648285)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="ship_body"]
+visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ship_body/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0024719238, 3.9175143, -2.4686432)
@@ -218,5 +220,5 @@ transform = Transform3D(1, 0, 0, 0, 0.98558563, -0.16917749, 0, 0.16917749, 0.98
 shape = SubResource("BoxShape3D_qty4p")
 
 [node name="CollisionShape3D33" type="CollisionShape3D" parent="ship_body/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 0.7660444, -0.6427875, 0, 0.6427875, 0.7660444, 0, 3.7366257, -13.875619)
+transform = Transform3D(1, 0, 0, 0, 0.5994707, -0.8003965, 0, 0.8003965, 0.5994707, 0, 3.5614922, -14.381227)
 shape = SubResource("BoxShape3D_v2ti4")
