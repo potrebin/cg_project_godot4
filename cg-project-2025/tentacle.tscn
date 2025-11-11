@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bt01i46cwyvix"]
+
+[ext_resource type="PackedScene" uid="uid://173hob5u4vmw" path="res://Models/tentacle.glb" id="1_u74vr"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="tentacle" parent="." instance=ExtResource("1_u74vr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08015907, 0, 0.095324755)
