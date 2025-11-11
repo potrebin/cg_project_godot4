@@ -24,3 +24,9 @@ In order to run the game in Godot:
 3. Click *Import*
 4. Select the *cg-project-2025* folder in the clones repo and open it
 5. When the project fully loads, click the *Run Project* button (small triangle on the top bar)
+
+### Launch Guide (Windows executable)
+
+1. Access this [Google Drive link](https://drive.google.com/drive/folders/11ZzY9g2W_P0qKzqwXunJ6knNs5-Nfbcd?usp=sharing)
+2. Download the folder
+3. Once downloaded, run the `.exe` game file
