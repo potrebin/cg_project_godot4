@@ -13,6 +13,7 @@
 Make sure you have Godot 4 installed.
 
 **Option A:** Visit [Godot Game Engine's official download page](https://godotengine.org/download/windows/) and download the latest Godot 4.x version for your operating system.
+
 **Option B:** Go to Steam and search for *Godot Engine*. Add it to your library and install it.
 
 In order to run the game in Godot:
