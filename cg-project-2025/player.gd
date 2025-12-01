@@ -49,15 +49,32 @@ func _physics_process(delta: float) -> void:
 				else:
 					target.open()
 	
+	if not Global.usingBinoculars:
+		if Input.is_action_just_pressed("click_r"):
+			Global.usingBinoculars = true
+	else:
+		if Input.is_action_just_pressed("click_r"):
+			Global.usingBinoculars = false
+	
+	$CanvasLayer/BinocularsView.visible = Global.usingBinoculars
+	$CanvasLayer/Pointer.visible = not Global.usingBinoculars
+	if Global.usingBinoculars:
+		if $LookAround/Camera3D.fov > 10:
+			$LookAround/Camera3D.fov -= 5
+	else:
+		if $LookAround/Camera3D.fov < 75:
+			$LookAround/Camera3D.fov += 5
+	
 	move_and_slide()
 
 # Allow the player to look around when moving the mouse
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		mouse_rotation_hor -= event.relative.x * mouse_sensitivity
-		LookAround.rotation.y = mouse_rotation_hor
-		mouse_rotation_vert = clamp(mouse_rotation_vert - event.relative.y * mouse_sensitivity, deg_to_rad(-80), deg_to_rad(90))
-		LookAround.rotation.x = mouse_rotation_vert
+		if not Global.usingBinoculars:
+			mouse_rotation_hor -= event.relative.x * mouse_sensitivity
+			LookAround.rotation.y = mouse_rotation_hor
+			mouse_rotation_vert = clamp(mouse_rotation_vert - event.relative.y * mouse_sensitivity, deg_to_rad(-80), deg_to_rad(90))
+			LookAround.rotation.x = mouse_rotation_vert
 
 # Use this method to achieve smooth movement
 func WASD_key_pressed(action, direction):

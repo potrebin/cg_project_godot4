@@ -25,9 +25,9 @@ ambient_light_sky_contribution = 0.2
 ambient_light_energy = 3.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_mwb40"]
-size = Vector2(2000, 2000)
-subdivide_width = 800
-subdivide_depth = 800
+size = Vector2(1000, 1000)
+subdivide_width = 440
+subdivide_depth = 440
 
 [sub_resource type="Shader" id="Shader_80nbo"]
 code = "shader_type spatial;
