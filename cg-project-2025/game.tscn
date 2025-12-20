@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://0amuxgdjaquy"]
+[gd_scene load_steps=14 format=3 uid="uid://0amuxgdjaquy"]
 
 [ext_resource type="Script" uid="uid://5dds33vgyqfv" path="res://camera_controller.gd" id="1_80nbo"]
+[ext_resource type="Texture2D" uid="uid://bo0jexi084qfm" path="res://2k_moon.jpg" id="2_fc0e3"]
 [ext_resource type="PackedScene" uid="uid://n73l5sq15pk8" path="res://ship.tscn" id="2_feb5d"]
 [ext_resource type="PackedScene" uid="uid://c6s5fo424lte7" path="res://player.tscn" id="3_fc0e3"]
 [ext_resource type="PackedScene" uid="uid://cr6vdy3yt52v7" path="res://cabin_door.tscn" id="4_fc0e3"]
@@ -129,12 +130,21 @@ shader_parameter/reflection_strength = 4.00000019
 shader_parameter/reflection_sharpness = 40.0000018525
 shader_parameter/moon_color = Color(1, 0.98, 0.9, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mwb40"]
-shading_mode = 0
-albedo_color = Color(0.9019608, 0.9019608, 0.9411765, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fc0e3"]
+emission_enabled = true
+emission_energy_multiplier = 1.33
+emission_texture = ExtResource("2_fc0e3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ryrav"]
+albedo_texture = ExtResource("2_fc0e3")
+emission_enabled = true
+emission = Color(1, 0.98, 0.9, 1)
+emission_energy_multiplier = 3.0
+emission_texture = ExtResource("2_fc0e3")
+disable_receive_shadows = true
 
 [sub_resource type="SphereMesh" id="SphereMesh_80nbo"]
-material = SubResource("StandardMaterial3D_mwb40")
+material = SubResource("StandardMaterial3D_ryrav")
 radius = 3.0
 height = 6.0
 radial_segments = 32
@@ -162,6 +172,7 @@ surface_material_override/0 = SubResource("ShaderMaterial_feb5d")
 
 [node name="Moon" type="MeshInstance3D" parent="."]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -179.90887, 299.32977, -311.47693)
+material_override = SubResource("StandardMaterial3D_fc0e3")
 mesh = SubResource("SphereMesh_80nbo")
 
 [node name="Ship" parent="." instance=ExtResource("2_feb5d")]
