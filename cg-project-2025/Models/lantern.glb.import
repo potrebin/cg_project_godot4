@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://b5f7qcdujwu07"
-path="res://.godot/imported/ship_body.glb-364d630d4065b4699924f7b53beba343.scn"
+uid="uid://buatv75vx8nsy"
+path="res://.godot/imported/lantern.glb-f33ed6a70c56bd519937dbe91084d223.scn"
 
 [deps]
 
-source_file="res://Models/ship_body.glb"
-dest_files=["res://.godot/imported/ship_body.glb-364d630d4065b4699924f7b53beba343.scn"]
+source_file="res://Models/lantern.glb"
+dest_files=["res://.godot/imported/lantern.glb-f33ed6a70c56bd519937dbe91084d223.scn"]
 
 [params]
 
@@ -38,11 +38,21 @@ materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
 _subresources={
-"materials": {
-"Wood01": {
-"use_external/enabled": true,
-"use_external/fallback_path": "res://Models/new_standard_material_3d.tres",
-"use_external/path": "uid://djqccxhgfycmf"
+"nodes": {
+"PATH:Cube_004": {
+"mesh_instance/cast_shadow": 0
+},
+"PATH:Cube_005": {
+"mesh_instance/cast_shadow": 0
+},
+"PATH:Cube_006": {
+"mesh_instance/cast_shadow": 0
+},
+"PATH:Cube_007": {
+"mesh_instance/cast_shadow": 0
+},
+"PATH:Plane_001": {
+"mesh_instance/cast_shadow": 0
 }
 }
 }

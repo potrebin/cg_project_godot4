@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://dgy18m2qp03ql"]
+
+[ext_resource type="PackedScene" uid="uid://buatv75vx8nsy" path="res://Models/lantern.glb" id="1_kxgpu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kxgpu"]
+size = Vector3(1, 1.779419, 1)
+
+[node name="Lantern" type="StaticBody3D"]
+
+[node name="lantern" parent="." instance=ExtResource("1_kxgpu")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -1.8378991, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8793335, 0)
+visible = false
+shape = SubResource("BoxShape3D_kxgpu")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2201312, 0.013165772)
+light_color = Color(1, 0.7, 0, 1)
+light_energy = 2.0
+light_specular = 0.0
+shadow_enabled = true
+omni_range = 80.0

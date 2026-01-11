@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://y4cpwymj4f3c"]
+
+[ext_resource type="PackedScene" uid="uid://cwdbob1hpwb5d" path="res://Models/bed.glb" id="1_xqjo8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xqjo8"]
+size = Vector3(3.2291565, 3.2770996, 7.921295)
+
+[node name="Bed" type="StaticBody3D"]
+
+[node name="bed" parent="." instance=ExtResource("1_xqjo8")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.059555054, 1.5758057, -0.004776001)
+visible = false
+shape = SubResource("BoxShape3D_xqjo8")

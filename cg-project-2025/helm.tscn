@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://01vhmsuo88dp"]
+
+[ext_resource type="PackedScene" uid="uid://dr51e5t3l0ieo" path="res://Models/helm.glb" id="1_kiic0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0bgn6"]
+size = Vector3(21.226929, 25.195465, 7.6054688)
+
+[node name="Helm" type="StaticBody3D"]
+
+[node name="helm" parent="." instance=ExtResource("1_kiic0")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.046569824, 12.097733, 0.30273438)
+visible = false
+shape = SubResource("BoxShape3D_0bgn6")

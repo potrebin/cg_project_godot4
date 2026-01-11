@@ -1,10 +1,14 @@
-[gd_scene load_steps=15 format=3 uid="uid://0amuxgdjaquy"]
+[gd_scene load_steps=19 format=3 uid="uid://0amuxgdjaquy"]
 
 [ext_resource type="Script" uid="uid://5dds33vgyqfv" path="res://camera_controller.gd" id="1_80nbo"]
 [ext_resource type="Texture2D" uid="uid://bo0jexi084qfm" path="res://2k_moon.jpg" id="2_fc0e3"]
 [ext_resource type="PackedScene" uid="uid://n73l5sq15pk8" path="res://ship.tscn" id="2_feb5d"]
 [ext_resource type="PackedScene" uid="uid://c6s5fo424lte7" path="res://player.tscn" id="3_fc0e3"]
 [ext_resource type="PackedScene" uid="uid://cr6vdy3yt52v7" path="res://cabin_door.tscn" id="4_fc0e3"]
+[ext_resource type="PackedScene" uid="uid://y4cpwymj4f3c" path="res://bed.tscn" id="6_ryrav"]
+[ext_resource type="PackedScene" uid="uid://01vhmsuo88dp" path="res://helm.tscn" id="7_eow3j"]
+[ext_resource type="PackedScene" uid="uid://bnuitd5ao8tv1" path="res://crate.tscn" id="8_j5wjh"]
+[ext_resource type="PackedScene" uid="uid://dgy18m2qp03ql" path="res://lantern.tscn" id="9_vef74"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mwb40"]
 sky_top_color = Color(0.050980393, 0.105882354, 0.16470589, 1)
@@ -21,9 +25,11 @@ sky_material = SubResource("ProceduralSkyMaterial_mwb40")
 background_mode = 2
 sky = SubResource("Sky_80nbo")
 ambient_light_source = 3
-ambient_light_color = Color(0.39313215, 0.38444668, 0.3714194, 1)
-ambient_light_sky_contribution = 0.2
-ambient_light_energy = 3.0
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_sky_contribution = 0.0
+ambient_light_energy = 0.0
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.07
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_mwb40"]
 size = Vector2(2000, 2000)
@@ -118,7 +124,7 @@ void light() {
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_feb5d"]
 render_priority = 0
 shader = SubResource("Shader_80nbo")
-shader_parameter/wave_speed = 1.5000000712500001
+shader_parameter/wave_speed = 1.50000007125
 shader_parameter/wave_amplitude = 0.400000019
 shader_parameter/wave_frequency = 1.0
 shader_parameter/water_color = Color(0.04, 0.12, 0.24, 1)
@@ -158,6 +164,7 @@ script = ExtResource("1_80nbo")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.81915206, -0.43938506, 0.36868784, 0, 0.64278764, 0.76604444, -0.57357645, 0.62750685, -0.5265408, 0, 0, 0)
+visible = false
 light_color = Color(0.78431374, 0.83137256, 0.9098039, 1)
 light_energy = 0.3
 shadow_enabled = true
@@ -171,7 +178,7 @@ mesh = SubResource("PlaneMesh_mwb40")
 surface_material_override/0 = SubResource("ShaderMaterial_feb5d")
 
 [node name="Moon" type="MeshInstance3D" parent="."]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -179.90887, 299.32977, -311.47693)
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -882.88104, 652.6075, -710.13776)
 material_override = SubResource("StandardMaterial3D_fc0e3")
 mesh = SubResource("SphereMesh_80nbo")
 
@@ -182,3 +189,51 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.381414, 6.381119)
 
 [node name="CabinDoor" parent="." instance=ExtResource("4_fc0e3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4, 4.79, -12.928)
+
+[node name="ShipProps" type="Node3D" parent="."]
+
+[node name="Bed" parent="ShipProps" instance=ExtResource("6_ryrav")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.019002, 3.4274592, -25.590515)
+
+[node name="Helm" parent="ShipProps" instance=ExtResource("7_eow3j")]
+transform = Transform3D(-0.16, 0, -2.4159327e-08, 0, 0.16, 0, 2.4159327e-08, 0, -0.16, 0, 15.069222, -14.624527)
+
+[node name="Crates" type="Node3D" parent="ShipProps"]
+
+[node name="Crate" parent="ShipProps/Crates" instance=ExtResource("8_j5wjh")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -6.9197583, 6.461151, 4.6775494)
+
+[node name="Crate4" parent="ShipProps/Crates" instance=ExtResource("8_j5wjh")]
+transform = Transform3D(1.299038, 0, 0.75, 0, 1.5, 0, -0.75, 0, 1.299038, -2.5465193, 12.601798, 29.69561)
+
+[node name="Crate5" parent="ShipProps/Crates" instance=ExtResource("8_j5wjh")]
+transform = Transform3D(-0.89879405, 0, 0.43837112, 0, 1, 0, -0.43837112, 0, -0.89879405, -2.3622124, 14.637782, 29.98538)
+
+[node name="Crate3" parent="ShipProps/Crates" instance=ExtResource("8_j5wjh")]
+transform = Transform3D(1.3217572, 0, -0.9016418, 0, 1.6, 0, 0.9016418, 0, 1.3217572, -6.502574, 6.132015, 8.424684)
+
+[node name="Crate2" parent="ShipProps/Crates" instance=ExtResource("8_j5wjh")]
+transform = Transform3D(1.8485062, 0, 0.76356053, 0, 2, 0, -0.76356053, 0, 1.8485062, 6.824137, 6.6172442, 9.573275)
+
+[node name="Lanterns" type="Node3D" parent="ShipProps"]
+
+[node name="Lantern" parent="ShipProps/Lanterns" instance=ExtResource("9_vef74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.414401, 12.261041, -11.613447)
+
+[node name="Lantern7" parent="ShipProps/Lanterns" instance=ExtResource("9_vef74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6807203, 13.510961, -27.538576)
+
+[node name="Lantern5" parent="ShipProps/Lanterns" instance=ExtResource("9_vef74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.039131, 15.625068, 23.6719)
+
+[node name="Lantern6" parent="ShipProps/Lanterns" instance=ExtResource("9_vef74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.984774, 15.625068, 23.6719)
+
+[node name="Lantern3" parent="ShipProps/Lanterns" instance=ExtResource("9_vef74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.212975, 23.065887, -28.360033)
+
+[node name="Lantern4" parent="ShipProps/Lanterns" instance=ExtResource("9_vef74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.124902, 23.065887, -28.360033)
+
+[node name="Lantern2" parent="ShipProps/Lanterns" instance=ExtResource("9_vef74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.3130064, 12.261041, -11.613447)

@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://b5f7qcdujwu07"
-path="res://.godot/imported/ship_body.glb-364d630d4065b4699924f7b53beba343.scn"
+uid="uid://s3w0e8wpk4cn"
+path="res://.godot/imported/crate.glb-22235abc96258d22c00f8d8bf638bb25.scn"
 
 [deps]
 
-source_file="res://Models/ship_body.glb"
-dest_files=["res://.godot/imported/ship_body.glb-364d630d4065b4699924f7b53beba343.scn"]
+source_file="res://Models/crate.glb"
+dest_files=["res://.godot/imported/crate.glb-22235abc96258d22c00f8d8bf638bb25.scn"]
 
 [params]
 
@@ -37,14 +37,6 @@ import_script/path=""
 materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
-_subresources={
-"materials": {
-"Wood01": {
-"use_external/enabled": true,
-"use_external/fallback_path": "res://Models/new_standard_material_3d.tres",
-"use_external/path": "uid://djqccxhgfycmf"
-}
-}
-}
+_subresources={}
 gltf/naming_version=2
 gltf/embedded_image_handling=1

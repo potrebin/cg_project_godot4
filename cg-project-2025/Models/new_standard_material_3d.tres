@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://djqccxhgfycmf"]
+
+[ext_resource type="Texture2D" uid="uid://byaro572xtu3c" path="res://Models/ship_body_ship hull wood.png" id="1_h0f6r"]
+[ext_resource type="Texture2D" uid="uid://bs8m0xgd2x0cp" path="res://Models/ship_body_ship hull wood 02.png" id="2_0ka1k"]
+
+[resource]
+albedo_texture = ExtResource("1_h0f6r")
+roughness_texture = ExtResource("2_0ka1k")
+roughness_texture_channel = 4
