@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://0amuxgdjaquy"]
+[gd_scene load_steps=24 format=3 uid="uid://0amuxgdjaquy"]
 
 [ext_resource type="Script" uid="uid://5dds33vgyqfv" path="res://camera_controller.gd" id="1_80nbo"]
 [ext_resource type="Texture2D" uid="uid://bo0jexi084qfm" path="res://2k_moon.jpg" id="2_fc0e3"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://6an1on88ccdx" path="res://locker.tscn" id="10_iotsf"]
 [ext_resource type="PackedScene" uid="uid://dvr11hl8021aj" path="res://tentacles.tscn" id="10_mfdv2"]
 [ext_resource type="Script" uid="uid://dvnwehm4isf2r" path="res://tentacles.gd" id="11_iotsf"]
+[ext_resource type="Shader" uid="uid://cyb2ta58xpc1q" path="res://distort.gdshader" id="13_lc2xo"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mwb40"]
 sky_top_color = Color(0.050980393, 0.105882354, 0.16470589, 1)
@@ -159,6 +160,15 @@ height = 6.0
 radial_segments = 32
 rings = 16
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_215e1"]
+shader = ExtResource("13_lc2xo")
+shader_parameter/strength = 0.0
+shader_parameter/speed = 0.0
+shader_parameter/frequency = 0.0
+shader_parameter/color_amount = 0.0
+shader_parameter/noise_scale = 0.0
+shader_parameter/noise_speed = 0.0
+
 [node name="Game" type="Node3D"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
@@ -247,14 +257,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.3130064, 12.261041, -11.61
 [node name="Locker" parent="ShipProps" instance=ExtResource("10_iotsf")]
 transform = Transform3D(-0.8, 0, -1.2079664e-07, 0, 0.8, 0, 1.2079664e-07, 0, -0.8, 6.3558855, 3.8543224, -15.594661)
 
-[node name="tentacle" parent="." instance=ExtResource("10_mfdv2")]
+[node name="tentacles" type="Node3D" parent="."]
+
+[node name="tentacle" parent="tentacles" instance=ExtResource("10_mfdv2")]
 transform = Transform3D(0.4525722, -0.21045469, -0.86653745, 0.09742799, 0.9776036, -0.18654482, 0.8863894, 0, 0.4629404, -31.229912, -1.4977865, -19.145718)
 script = ExtResource("11_iotsf")
 
-[node name="tentacle2" parent="." instance=ExtResource("10_mfdv2")]
+[node name="tentacle2" parent="tentacles" instance=ExtResource("10_mfdv2")]
 transform = Transform3D(0.7452874, 0.1253958, 0.2623406, -0.11828196, 0.7901113, -0.04163514, -0.26562393, -1.7881394e-08, 0.75461507, -5.8070374, -5.7795534, 47.29584)
 script = ExtResource("11_iotsf")
 
-[node name="tentacle3" parent="." instance=ExtResource("10_mfdv2")]
+[node name="tentacle3" parent="tentacles" instance=ExtResource("10_mfdv2")]
 transform = Transform3D(0.15732604, 0.31506738, 0.89307386, -0.2477862, 0.8874704, -0.26944, -0.91402966, -0.18635565, 0.22676215, 32.159904, -1.6616125, -1.3460732)
 script = ExtResource("11_iotsf")
+
+[node name="ScreenFX" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="DistortRect" type="ColorRect" parent="ScreenFX"]
+material = SubResource("ShaderMaterial_215e1")
+offset_right = 1600.0
+offset_bottom = 900.0
+mouse_filter = 2
