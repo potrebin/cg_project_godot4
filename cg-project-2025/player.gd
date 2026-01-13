@@ -48,6 +48,11 @@ func _physics_process(delta: float) -> void:
 					target.close()
 				else:
 					target.open()
+			elif target.is_in_group("locker"):
+				if target.is_open:
+					target.close()
+				else:
+					target.open()
 	
 	if not Global.usingBinoculars:
 		if Input.is_action_just_pressed("click_r"):

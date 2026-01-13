@@ -1,0 +1,120 @@
+[gd_scene load_steps=10 format=3 uid="uid://6an1on88ccdx"]
+
+[ext_resource type="Script" uid="uid://dxxv141qskq7l" path="res://locker.gd" id="1_7dpg0"]
+[ext_resource type="PackedScene" uid="uid://pi0a3q55adox" path="res://Models/locker.glb" id="1_eks1q"]
+[ext_resource type="PackedScene" uid="uid://c1gea2s4813xg" path="res://Models/locker_door.glb" id="2_hcspt"]
+[ext_resource type="PackedScene" uid="uid://ckkr4kd66af6p" path="res://Models/locker_door_right.glb" id="3_a13x5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hcspt"]
+size = Vector3(2, 8.234436, 3.7939453)
+
+[sub_resource type="Animation" id="Animation_a13x5"]
+resource_name = "open"
+length = 0.3
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LockerDoor:rotation:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 2),
+"points": PackedFloat32Array(0, 0, 0, 0.1, -0.6, -1.5707964, -0.2, -0.2, 0, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LockerDoor2:rotation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(2, 2),
+"points": PackedFloat32Array(0, 0, 0, 0.1, 0.6, 1.571, -0.2, 0.2, 0, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+
+[sub_resource type="Animation" id="Animation_7dpg0"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LockerDoor:rotation:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LockerDoor2:rotation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_d6t2q"]
+resource_name = "close"
+length = 0.3
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LockerDoor:rotation:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 2),
+"points": PackedFloat32Array(-1.5707964, 0, 0, 0.1, -0.6, 0, -0.2, -0.2, 0, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LockerDoor2:rotation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(2, 2),
+"points": PackedFloat32Array(1.5707964, 0, 0, 0.1, 0.6, 0, -0.2, 0.2, 0, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7dpg0"]
+_data = {
+&"RESET": SubResource("Animation_7dpg0"),
+&"close": SubResource("Animation_d6t2q"),
+&"open": SubResource("Animation_a13x5")
+}
+
+[node name="Locker" type="StaticBody3D" groups=["locker"]]
+script = ExtResource("1_7dpg0")
+
+[node name="locker" parent="." instance=ExtResource("1_eks1q")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.617218, 0.0014648438)
+visible = false
+shape = SubResource("BoxShape3D_hcspt")
+
+[node name="LockerDoor" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 3.6499748, 1.737262)
+
+[node name="locker_door" parent="LockerDoor" instance=ExtResource("2_hcspt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -3.65, -1.737)
+
+[node name="LockerDoor2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 3.65, -1.737)
+
+[node name="locker_door_right" parent="LockerDoor2" instance=ExtResource("3_a13x5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -3.65, 0.85798055)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_7dpg0")
+}

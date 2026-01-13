@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://0amuxgdjaquy"]
+[gd_scene load_steps=22 format=3 uid="uid://0amuxgdjaquy"]
 
 [ext_resource type="Script" uid="uid://5dds33vgyqfv" path="res://camera_controller.gd" id="1_80nbo"]
 [ext_resource type="Texture2D" uid="uid://bo0jexi084qfm" path="res://2k_moon.jpg" id="2_fc0e3"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://01vhmsuo88dp" path="res://helm.tscn" id="7_eow3j"]
 [ext_resource type="PackedScene" uid="uid://bnuitd5ao8tv1" path="res://crate.tscn" id="8_j5wjh"]
 [ext_resource type="PackedScene" uid="uid://dgy18m2qp03ql" path="res://lantern.tscn" id="9_vef74"]
+[ext_resource type="PackedScene" uid="uid://6an1on88ccdx" path="res://locker.tscn" id="10_iotsf"]
 [ext_resource type="PackedScene" uid="uid://dvr11hl8021aj" path="res://tentacles.tscn" id="10_mfdv2"]
 [ext_resource type="Script" uid="uid://dvnwehm4isf2r" path="res://tentacles.gd" id="11_iotsf"]
 
@@ -29,7 +30,7 @@ sky = SubResource("Sky_80nbo")
 ambient_light_source = 3
 ambient_light_color = Color(1, 1, 1, 1)
 ambient_light_sky_contribution = 0.0
-ambient_light_energy = 0.0
+ambient_light_energy = 0.02
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.07
 
@@ -225,6 +226,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.414401, 12.261041, -11.6134
 [node name="Lantern7" parent="ShipProps/Lanterns" instance=ExtResource("9_vef74")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6807203, 13.510961, -27.538576)
 
+[node name="Lantern8" parent="ShipProps/Lanterns" instance=ExtResource("9_vef74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6807203, 13.510961, -18.232372)
+
 [node name="Lantern5" parent="ShipProps/Lanterns" instance=ExtResource("9_vef74")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.039131, 15.625068, 23.6719)
 
@@ -239,6 +243,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.124902, 23.065887, -28.360
 
 [node name="Lantern2" parent="ShipProps/Lanterns" instance=ExtResource("9_vef74")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.3130064, 12.261041, -11.613447)
+
+[node name="Locker" parent="ShipProps" instance=ExtResource("10_iotsf")]
+transform = Transform3D(-0.8, 0, -1.2079664e-07, 0, 0.8, 0, 1.2079664e-07, 0, -0.8, 6.3558855, 3.8543224, -15.594661)
 
 [node name="tentacle" parent="." instance=ExtResource("10_mfdv2")]
 transform = Transform3D(0.4525722, -0.21045469, -0.86653745, 0.09742799, 0.9776036, -0.18654482, 0.8863894, 0, 0.4629404, -31.229912, -1.4977865, -19.145718)
