@@ -1,7 +1,7 @@
 extends Node
 
 var stage = 'intro'
-var inventory = {'binoculars': 0}
+var inventory = {'binoculars': 0, 'axe': 0, 'bottle': 0}
 var score = 0
 
 var usingBinoculars = false

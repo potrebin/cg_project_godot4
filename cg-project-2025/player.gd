@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @onready var LookAround = $LookAround
 @onready var raycast = $LookAround/RayCast3D
+@onready var bottle = preload("res://bottle.tscn")
 
 var movement_speed = 380
 var base_movement_speed = 380
@@ -74,6 +75,10 @@ func _physics_process(delta: float) -> void:
 			elif target.is_in_group("binoculars"):
 				Global.inventory['binoculars'] = 1
 				target.queue_free()
+			elif target.is_in_group("bottles"):
+				if Global.inventory['bottle'] == 0:
+					Global.inventory['bottle'] = 1
+					print("you picked up a bottle")
 	
 	if Global.playerSleeping and Input.is_action_just_pressed("shift"):
 		position = Vector3(-3.312, 5.737, -25.41)
@@ -99,6 +104,11 @@ func _physics_process(delta: float) -> void:
 	else:
 		if Input.is_action_just_pressed("click_r"):
 			Global.usingBinoculars = false
+	
+	if Input.is_action_just_pressed("click_l"):
+		if Global.inventory['bottle'] == 1:
+			Global.inventory['bottle'] = 0
+			throw_bottle()
 	
 	$CanvasLayer/BinocularsView.visible = Global.usingBinoculars
 	$CanvasLayer/Pointer.visible = not Global.usingBinoculars
@@ -132,3 +142,11 @@ func WASD_key_pressed(action, direction):
 		movement_direciton[direction] -= 0.1
 	if movement_direciton[direction] < 0:
 		movement_direciton[direction] = 0
+
+func throw_bottle():
+	var new_bottle = bottle.instantiate()
+	get_tree().current_scene.add_child(new_bottle)
+	new_bottle.global_position = LookAround.global_position
+	new_bottle.apply_impulse(-LookAround.global_basis.z * 25.0)
+	new_bottle.apply_torque_impulse(Vector3(randf_range(-10.0, 10.0), 0.0, randf_range(-10.0, 10.0)))
+	

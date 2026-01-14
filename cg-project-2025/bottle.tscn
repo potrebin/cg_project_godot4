@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cpvnlbmcxxms"]
+
+[ext_resource type="PackedScene" uid="uid://m6nt5yi3l23p" path="res://Models/bottle.glb" id="1_6k8ux"]
+[ext_resource type="Script" uid="uid://d0wji6n1cqwkd" path="res://bottle.gd" id="1_xiyir"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xiyir"]
+height = 1.0266113
+radius = 0.1665039
+
+[node name="bottle" type="RigidBody3D"]
+collision_layer = 4
+collision_mask = 4
+inertia = Vector3(1, 1, 1)
+script = ExtResource("1_xiyir")
+
+[node name="bottle" parent="." instance=ExtResource("1_6k8ux")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, -0.43573415, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09734689, 0)
+visible = false
+shape = SubResource("CylinderShape3D_xiyir")

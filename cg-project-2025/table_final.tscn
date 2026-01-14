@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://bu2vxdjvkhgfn"]
+[gd_scene load_steps=3 format=3 uid="uid://cfnqdsc320g8j"]
 
 [ext_resource type="PackedScene" uid="uid://ck3dnkhdwlrl6" path="res://Models/Captain_table2.glb" id="1_tvyah"]
 
@@ -12,4 +12,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2103622, 0, 0.789078)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.20083094, 0.07570583, 0.80182916)
+visible = false
 shape = SubResource("BoxShape3D_rnbj0")

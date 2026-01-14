@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=3 uid="uid://cy367el7s07hs"]
+
+[ext_resource type="PackedScene" uid="uid://ct6la2uhgof3o" path="res://Models/cardboard_box.glb" id="1_s06yn"]
+[ext_resource type="PackedScene" uid="uid://m6nt5yi3l23p" path="res://Models/bottle.glb" id="2_5urlu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5urlu"]
+size = Vector3(0.8005371, 0.80270386, 0.94628906)
+
+[node name="BottleBox" type="StaticBody3D" groups=["bottles"]]
+
+[node name="cardboard_box" parent="." instance=ExtResource("1_s06yn")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.47453308, 0)
+shape = SubResource("BoxShape3D_5urlu")
+
+[node name="bottle3" parent="." instance=ExtResource("2_5urlu")]
+transform = Transform3D(0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, 0.25522822, 0.069738165, 0.34210163)
+
+[node name="bottle4" parent="." instance=ExtResource("2_5urlu")]
+transform = Transform3D(0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, 0.2357809, 0.069738165, 0.11354278)
+
+[node name="bottle5" parent="." instance=ExtResource("2_5urlu")]
+transform = Transform3D(0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, 0.25814527, 0.069738165, -0.114425525)
+
+[node name="bottle6" parent="." instance=ExtResource("2_5urlu")]
+transform = Transform3D(0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, 0.25522822, 0.069738165, -0.3412596)
+
+[node name="bottle7" parent="." instance=ExtResource("2_5urlu")]
+transform = Transform3D(0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, -0.25673264, 0.069738165, 0.34210163)
+
+[node name="bottle8" parent="." instance=ExtResource("2_5urlu")]
+transform = Transform3D(0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, -0.2538156, 0.069738165, 0.11354278)
+
+[node name="bottle9" parent="." instance=ExtResource("2_5urlu")]
+transform = Transform3D(0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, -0.2129761, 0.069738165, -0.114425525)
+
+[node name="bottle10" parent="." instance=ExtResource("2_5urlu")]
+transform = Transform3D(0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, -0.25673264, 0.069738165, -0.3412596)
+
+[node name="bottle11" parent="." instance=ExtResource("2_5urlu")]
+transform = Transform3D(0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, -0.025722802, 0.069738165, 0.34210163)
+
+[node name="bottle12" parent="." instance=ExtResource("2_5urlu")]
+transform = Transform3D(0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, -0.0014136434, 0.069738165, 0.11354278)
+
+[node name="bottle13" parent="." instance=ExtResource("2_5urlu")]
+transform = Transform3D(0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, 0.026785009, 0.069738165, -0.114425525)
+
+[node name="bottle14" parent="." instance=ExtResource("2_5urlu")]
+transform = Transform3D(0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, -0.013082087, 0.069738165, -0.3412596)
