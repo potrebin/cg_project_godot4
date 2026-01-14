@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bb6qhsn4dro8h"]
+
+[ext_resource type="PackedScene" uid="uid://s4d2j2v15s8w" path="res://Models/binoculars.glb" id="1_ds0uj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hrh7q"]
+size = Vector3(0.82666016, 0.30664063, 0.67089844)
+
+[node name="binoculars" type="Area3D" groups=["binoculars"]]
+
+[node name="binoculars" parent="." instance=ExtResource("1_ds0uj")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08666992, 0.084472656, 0)
+visible = false
+shape = SubResource("BoxShape3D_hrh7q")

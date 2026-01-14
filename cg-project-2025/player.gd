@@ -4,6 +4,7 @@ extends CharacterBody3D
 @onready var raycast = $LookAround/RayCast3D
 
 var movement_speed = 380
+var base_movement_speed = 380
 var fall_speed = -50  # negative
 var mouse_rotation_hor = 0
 var mouse_rotation_vert = 0
@@ -11,11 +12,14 @@ var mouse_sensitivity = 0.01  # sensitivity of rotating the camera
 var player_angle = 0  # what direction is the player looking
 var movement_direciton = {'w':0, 'a':0, 's':0, 'd':0}
 
+var stamina = 1000
+
 func _ready() -> void:
 	pass
 
 func _physics_process(delta: float) -> void:
 	player_angle = LookAround.rotation.y
+	#print(stamina)
 	
 	WASD_key_pressed("move_forward", "w")
 	WASD_key_pressed("move_backward", "s")
@@ -40,6 +44,13 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("click_l"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
+	if Input.is_action_pressed("shift"):
+		if stamina > 0:
+			movement_speed = base_movement_speed * (1 + stamina / 1000.0 / 1.6)
+			stamina -= 1
+	else:
+		movement_speed = base_movement_speed
+	
 	if Input.is_action_just_pressed("interact"):
 		if raycast.is_colliding():
 			var target = raycast.get_collider()
@@ -53,10 +64,19 @@ func _physics_process(delta: float) -> void:
 					target.close()
 				else:
 					target.open()
+			elif target.is_in_group("bed"):
+				stamina += 50
+			elif target.is_in_group("binoculars"):
+				Global.inventory['binoculars'] = 1
+				target.queue_free()
+				print("binoculars picked up!")
+	
+	stamina = clamp(stamina, 0, 1000)
 	
 	if not Global.usingBinoculars:
 		if Input.is_action_just_pressed("click_r"):
-			Global.usingBinoculars = true
+			if Global.inventory['binoculars'] == 1:
+				Global.usingBinoculars = true
 	else:
 		if Input.is_action_just_pressed("click_r"):
 			Global.usingBinoculars = false

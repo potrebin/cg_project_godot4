@@ -5,7 +5,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_xqjo8"]
 size = Vector3(3.2291565, 3.2770996, 7.921295)
 
-[node name="Bed" type="StaticBody3D"]
+[node name="Bed" type="StaticBody3D" groups=["bed"]]
 
 [node name="bed" parent="." instance=ExtResource("1_xqjo8")]
 
