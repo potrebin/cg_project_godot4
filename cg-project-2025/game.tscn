@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://0amuxgdjaquy"]
+[gd_scene load_steps=25 format=3 uid="uid://0amuxgdjaquy"]
 
 [ext_resource type="Script" uid="uid://5dds33vgyqfv" path="res://camera_controller.gd" id="1_80nbo"]
 [ext_resource type="Texture2D" uid="uid://bo0jexi084qfm" path="res://2k_moon.jpg" id="2_fc0e3"]
@@ -10,10 +10,9 @@
 [ext_resource type="PackedScene" uid="uid://bnuitd5ao8tv1" path="res://crate.tscn" id="8_j5wjh"]
 [ext_resource type="PackedScene" uid="uid://dgy18m2qp03ql" path="res://lantern.tscn" id="9_vef74"]
 [ext_resource type="PackedScene" uid="uid://6an1on88ccdx" path="res://locker.tscn" id="10_iotsf"]
-[ext_resource type="PackedScene" uid="uid://dvr11hl8021aj" path="res://tentacles.tscn" id="10_mfdv2"]
 [ext_resource type="PackedScene" uid="uid://bb6qhsn4dro8h" path="res://binoculars.tscn" id="11_215e1"]
 [ext_resource type="PackedScene" uid="uid://cy367el7s07hs" path="res://bottle_box.tscn" id="12_7sc4i"]
-[ext_resource type="PackedScene" uid="uid://cfnqdsc320g8j" path="res://table_final.tscn" id="12_215e1"]
+[ext_resource type="PackedScene" path="res://table_final.tscn" id="12_215e1"]
 [ext_resource type="Shader" uid="uid://cyb2ta58xpc1q" path="res://distort.gdshader" id="13_lc2xo"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mwb40"]
@@ -199,6 +198,56 @@ mesh = SubResource("SphereMesh_80nbo")
 
 [node name="Ship" parent="." instance=ExtResource("2_feb5d")]
 
+[node name="GrabPoints" type="Node3D" parent="Ship"]
+
+[node name="Grab01" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.370023, 7.274829, -5.489407)
+
+[node name="Grab02" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.945831, 7.5216446, 2.3401256)
+
+[node name="Grab03" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.084994, 7.9800606, 13.846982)
+
+[node name="Grab04" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.734789, 15.966753, 23.031769)
+
+[node name="Grab05" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.8123236, 16.86177, 30.475191)
+
+[node name="Grab06" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8085742, 16.818377, 35.399887)
+
+[node name="Grab07" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.685584, 16.617476, 25.387957)
+
+[node name="Grab08" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.959247, 8.048238, 15.451923)
+
+[node name="Grab09" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.918905, 7.5955467, -1.7813039)
+
+[node name="Grab10" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.35164, 20.26249, -15.2056465)
+
+[node name="Grab11" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.9914865, 23.644278, -29.703253)
+
+[node name="Grab12" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5351048, 23.816362, -30.182556)
+
+[node name="Grab13" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.524389, 21.473625, -20.147007)
+
+[node name="Grab14" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 28.117178, 0)
+
+[node name="Grab15" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 26.183573, 20.442686)
+
+[node name="Grab16" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 30.57775, -21.713062)
+
 [node name="Player" parent="." instance=ExtResource("3_fc0e3")]
 transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 10.381414, 6.381119)
 
@@ -271,16 +320,40 @@ transform = Transform3D(0.9251501, 0, 0.37960148, 0, 1, 0, -0.37960148, 0, 0.925
 [node name="BottleBox2" parent="ShipProps" instance=ExtResource("12_7sc4i")]
 transform = Transform3D(0.74517363, 0, 0.6668707, 0, 1, 0, -0.6668707, 0, 0.74517363, 6.4975643, 3.3896275, -20.805143)
 
-[node name="tentacles" type="Node3D" parent="."]
+[node name="TentacleSpawnGroup" type="Node3D" parent="."]
 
-[node name="tentacle" parent="tentacles" instance=ExtResource("10_mfdv2")]
-transform = Transform3D(0.4525722, -0.21045469, -0.86653745, 0.09742799, 0.9776036, -0.18654482, 0.8863894, 0, 0.4629404, -31.229912, -1.4977865, -19.145718)
+[node name="Spawn01" type="Marker3D" parent="TentacleSpawnGroup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.154566, -0.6, -9.574005)
 
-[node name="tentacle2" parent="tentacles" instance=ExtResource("10_mfdv2")]
-transform = Transform3D(0.7452874, 0.1253958, 0.2623406, -0.11828196, 0.7901113, -0.04163514, -0.26562393, -1.7881394e-08, 0.75461507, -5.8070374, -5.7795534, 47.29584)
+[node name="Spawn02" type="Marker3D" parent="TentacleSpawnGroup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.23294, -0.5999981, -22.112926)
 
-[node name="tentacle3" parent="tentacles" instance=ExtResource("10_mfdv2")]
-transform = Transform3D(0.15732604, 0.31506738, 0.89307386, -0.2477862, 0.8874704, -0.26944, -0.91402966, -0.18635565, 0.22676215, 32.159904, -1.6616125, -1.3460732)
+[node name="Spawn03" type="Marker3D" parent="TentacleSpawnGroup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.489862, -0.6, 8.007414)
+
+[node name="Spawn04" type="Marker3D" parent="TentacleSpawnGroup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.521992, -0.5999962, 23.2336)
+
+[node name="Spawn05" type="Marker3D" parent="TentacleSpawnGroup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.432336, -0.6, 33.56867)
+
+[node name="Spawn06" type="Marker3D" parent="TentacleSpawnGroup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.365896, -0.5999962, 43.827625)
+
+[node name="Spawn07" type="Marker3D" parent="TentacleSpawnGroup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.158615, -0.5999981, 30.50674)
+
+[node name="Spawn08" type="Marker3D" parent="TentacleSpawnGroup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.660141, -0.60000384, 5.88377)
+
+[node name="Spawn09" type="Marker3D" parent="TentacleSpawnGroup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.71698, -2.1452117, -15.893063)
+
+[node name="Spawn10" type="Marker3D" parent="TentacleSpawnGroup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.874878, -0.6, -37.775223)
+
+[node name="Spawn11" type="Marker3D" parent="TentacleSpawnGroup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.65524, -0.5999962, -39.836403)
 
 [node name="ScreenFX" type="CanvasLayer" parent="."]
 layer = 2

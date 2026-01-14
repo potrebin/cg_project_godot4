@@ -9,6 +9,7 @@ script = ExtResource("2_3jw5c")
 [node name="TentacleIK" type="SkeletonIK3D" parent="Armature/Skeleton3D" index="1"]
 root_bone = &"Bone"
 tip_bone = &"Bone.030"
+override_tip_basis = false
 target_node = NodePath("../../../IKTarget")
 
 [node name="AnimationPlayer" parent="." index="2"]
