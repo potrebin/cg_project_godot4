@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://0amuxgdjaquy"]
+[gd_scene load_steps=25 format=3 uid="uid://0amuxgdjaquy"]
 
 [ext_resource type="Script" uid="uid://5dds33vgyqfv" path="res://camera_controller.gd" id="1_80nbo"]
 [ext_resource type="Texture2D" uid="uid://bo0jexi084qfm" path="res://2k_moon.jpg" id="2_fc0e3"]
@@ -14,7 +14,6 @@
 [ext_resource type="PackedScene" uid="uid://bb6qhsn4dro8h" path="res://binoculars.tscn" id="11_215e1"]
 [ext_resource type="Script" uid="uid://dvnwehm4isf2r" path="res://tentacles.gd" id="11_iotsf"]
 [ext_resource type="Shader" uid="uid://cyb2ta58xpc1q" path="res://distort.gdshader" id="13_lc2xo"]
-[ext_resource type="PackedScene" uid="uid://ck3dnkhdwlrl6" path="res://Models/Captain_table2.glb" id="15_7sc4i"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mwb40"]
 sky_top_color = Color(0.050980393, 0.105882354, 0.16470589, 1)
@@ -284,6 +283,3 @@ material = SubResource("ShaderMaterial_215e1")
 offset_right = 1600.0
 offset_bottom = 900.0
 mouse_filter = 2
-
-[node name="Captain_table2" parent="." instance=ExtResource("15_7sc4i")]
-transform = Transform3D(-6.556708e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.556708e-08, 6.1501203, 4.526133, -26.000319)
