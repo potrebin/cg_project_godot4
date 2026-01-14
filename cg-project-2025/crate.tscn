@@ -6,6 +6,7 @@
 size = Vector3(1.6481934, 1.6520996, 1.6523438)
 
 [node name="Crate" type="StaticBody3D"]
+collision_layer = 5
 
 [node name="crate" parent="." instance=ExtResource("1_uep05")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)

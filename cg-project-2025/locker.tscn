@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://6an1on88ccdx"]
+[gd_scene load_steps=14 format=3 uid="uid://6an1on88ccdx"]
 
 [ext_resource type="Script" uid="uid://dxxv141qskq7l" path="res://locker.gd" id="1_7dpg0"]
 [ext_resource type="PackedScene" uid="uid://pi0a3q55adox" path="res://Models/locker.glb" id="1_eks1q"]
@@ -99,6 +99,9 @@ _data = {
 &"open": SubResource("Animation_a13x5")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_wchdm"]
+size = Vector3(2.001709, 8.211426, 3.8183594)
+
 [node name="Locker" type="StaticBody3D"]
 script = ExtResource("1_7dpg0")
 
@@ -106,10 +109,12 @@ script = ExtResource("1_7dpg0")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.059829712, 0.0014648438)
+visible = false
 shape = SubResource("BoxShape3D_hcspt")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.6276398, 1.7995911)
+visible = false
 shape = SubResource("BoxShape3D_d6t2q")
 
 [node name="LockerDoor" type="Node3D" parent="."]
@@ -123,6 +128,7 @@ script = ExtResource("4_d6t2q")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LockerDoor/LockerInteractionArea3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.041503906, 0.38198853, -0.9030762)
+visible = false
 shape = SubResource("BoxShape3D_dtyjl")
 
 [node name="LockerDoor2" type="Node3D" parent="."]
@@ -136,9 +142,18 @@ script = ExtResource("4_d6t2q")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LockerDoor2/LockerInteractionArea3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.041503906, 0.38198853, 1.0969238)
+visible = false
 shape = SubResource("BoxShape3D_dtyjl")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_7dpg0")
 }
+
+[node name="BottleCollision" type="Area3D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BottleCollision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.605713, 0)
+shape = SubResource("BoxShape3D_wchdm")

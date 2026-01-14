@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://0amuxgdjaquy"]
+[gd_scene load_steps=26 format=3 uid="uid://0amuxgdjaquy"]
 
 [ext_resource type="Script" uid="uid://5dds33vgyqfv" path="res://camera_controller.gd" id="1_80nbo"]
 [ext_resource type="Texture2D" uid="uid://bo0jexi084qfm" path="res://2k_moon.jpg" id="2_fc0e3"]
@@ -12,8 +12,9 @@
 [ext_resource type="PackedScene" uid="uid://6an1on88ccdx" path="res://locker.tscn" id="10_iotsf"]
 [ext_resource type="PackedScene" uid="uid://bb6qhsn4dro8h" path="res://binoculars.tscn" id="11_215e1"]
 [ext_resource type="PackedScene" uid="uid://cy367el7s07hs" path="res://bottle_box.tscn" id="12_7sc4i"]
-[ext_resource type="PackedScene" path="res://table_final.tscn" id="12_215e1"]
+[ext_resource type="PackedScene" uid="uid://cfnqdsc320g8j" path="res://table_final.tscn" id="12_215e1"]
 [ext_resource type="Shader" uid="uid://cyb2ta58xpc1q" path="res://distort.gdshader" id="13_lc2xo"]
+[ext_resource type="Script" uid="uid://2pwvom7dth4w" path="res://distort_rect.gd" id="15_7sc4i"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mwb40"]
 sky_top_color = Color(0.050980393, 0.105882354, 0.16470589, 1)
@@ -164,11 +165,11 @@ rings = 16
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_215e1"]
 shader = ExtResource("13_lc2xo")
 shader_parameter/strength = 0.0
-shader_parameter/speed = 0.0
-shader_parameter/frequency = 0.0
+shader_parameter/speed = 1.398000066405
+shader_parameter/frequency = 60.2150028602125
 shader_parameter/color_amount = 0.0
-shader_parameter/noise_scale = 0.0
-shader_parameter/noise_speed = 0.30000001425
+shader_parameter/noise_scale = 1849.462087849445
+shader_parameter/noise_speed = 0.6000000285
 
 [node name="Game" type="Node3D"]
 
@@ -363,3 +364,4 @@ material = SubResource("ShaderMaterial_215e1")
 offset_right = 1600.0
 offset_bottom = 900.0
 mouse_filter = 2
+script = ExtResource("15_7sc4i")

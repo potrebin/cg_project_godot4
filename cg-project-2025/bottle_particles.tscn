@@ -1,18 +1,14 @@
 [gd_scene load_steps=4 format=3 uid="uid://rgc0174ssusc"]
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mcj5d"]
-lifetime_randomness = 0.42
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pu53n"]
 particle_flag_rotate_y = true
 angle_min = -179.99998
 angle_max = 180.00002
 direction = Vector3(0, 1, 0)
 spread = 180.0
-initial_velocity_min = 4.0
+initial_velocity_min = 8.0
 initial_velocity_max = 22.0
-angular_velocity_min = -50.000015
-angular_velocity_max = 49.99998
-scale_min = 0.19999999
-scale_max = 1.4
+scale_min = 0.29999998
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_845bj"]
 transparency = 1
@@ -20,9 +16,11 @@ albedo_color = Color(0.22040999, 0.31, 0.20459999, 0.8)
 
 [sub_resource type="PrismMesh" id="PrismMesh_mcj5d"]
 material = SubResource("StandardMaterial3D_845bj")
-size = Vector3(0.4, 0.7, 0.02)
+left_to_right = -0.7
+size = Vector3(0.6, 0.7, 0.04)
 subdivide_width = 1
 subdivide_height = 1
+subdivide_depth = 1
 
 [node name="BottleParticles" type="GPUParticles3D"]
 emitting = false
@@ -30,5 +28,5 @@ amount = 50
 lifetime = 0.6
 one_shot = true
 explosiveness = 1.0
-process_material = SubResource("ParticleProcessMaterial_mcj5d")
+process_material = SubResource("ParticleProcessMaterial_pu53n")
 draw_pass_1 = SubResource("PrismMesh_mcj5d")

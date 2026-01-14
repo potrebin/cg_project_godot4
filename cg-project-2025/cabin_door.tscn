@@ -6,21 +6,6 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_2xmyf"]
 size = Vector3(5.118164, 8.412231, 0.4729004)
 
-[sub_resource type="Animation" id="Animation_2xmyf"]
-resource_name = "open"
-length = 0.4
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation:y")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(2, 2),
-"points": PackedFloat32Array(0, 0, 0, 0.1, -0.6, -1.5707964, -0.2, -0.2, 0, 0),
-"times": PackedFloat32Array(0, 0.4)
-}
-
 [sub_resource type="Animation" id="Animation_gw1kp"]
 length = 0.001
 tracks/0/type = "bezier"
@@ -50,6 +35,21 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.4)
 }
 
+[sub_resource type="Animation" id="Animation_2xmyf"]
+resource_name = "open"
+length = 0.4
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 2),
+"points": PackedFloat32Array(0, 0, 0, 0.1, -0.6, -1.5707964, -0.2, -0.2, 0, 0),
+"times": PackedFloat32Array(0, 0.4)
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nagk5"]
 _data = {
 &"RESET": SubResource("Animation_gw1kp"),
@@ -58,6 +58,8 @@ _data = {
 }
 
 [node name="CabinDoor" type="StaticBody3D" groups=["door"]]
+collision_layer = 5
+collision_mask = 5
 script = ExtResource("1_gw1kp")
 
 [node name="ship_cabin_door" parent="." instance=ExtResource("1_2xmyf")]

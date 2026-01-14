@@ -6,6 +6,7 @@
 size = Vector3(1, 1.779419, 1)
 
 [node name="Lantern" type="StaticBody3D"]
+collision_layer = 5
 
 [node name="lantern" parent="." instance=ExtResource("1_kxgpu")]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -1.8378991, 0)

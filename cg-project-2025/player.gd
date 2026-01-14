@@ -4,8 +4,8 @@ extends CharacterBody3D
 @onready var raycast = $LookAround/RayCast3D
 @onready var bottle = preload("res://bottle.tscn")
 
-var movement_speed = 380
-var base_movement_speed = 380
+var movement_speed = 200
+var base_movement_speed = 320
 var fall_speed = -50  # negative
 var mouse_rotation_hor = 0
 var mouse_rotation_vert = 0
@@ -43,12 +43,12 @@ func _physics_process(delta: float) -> void:
 	# NOTE: press ESC to show cursor (e.g. in order to enable full screen), then click in-game again to hide cursor
 	if Input.is_action_just_pressed("Escape"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	if Input.is_action_just_pressed("click_l"):
+	if Input.is_action_just_pressed("click_l") or Input.is_action_just_pressed("click_r"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 	if Input.is_action_pressed("shift"):
 		if stamina > 0:
-			movement_speed = base_movement_speed * (1 + stamina / 1000.0 / 1.6)
+			movement_speed = base_movement_speed * (1 + stamina / 1000.0 / 1.5)
 			if movement_direciton['w'] != 0 or movement_direciton['a'] != 0 or movement_direciton['s'] != 0 or movement_direciton['d'] != 0:
 				stamina -= 1
 	else:
@@ -78,7 +78,7 @@ func _physics_process(delta: float) -> void:
 			elif target.is_in_group("bottles"):
 				if Global.inventory['bottle'] == 0:
 					Global.inventory['bottle'] = 1
-					print("you picked up a bottle")
+					Global.inventory['axe'] = 0
 	
 	if Global.playerSleeping and Input.is_action_just_pressed("shift"):
 		position = Vector3(-3.312, 5.737, -25.41)
@@ -109,6 +109,12 @@ func _physics_process(delta: float) -> void:
 		if Global.inventory['bottle'] == 1:
 			Global.inventory['bottle'] = 0
 			throw_bottle()
+	
+	if Input.is_action_pressed("jump"):
+		Global.distortion_scale += 0.0002
+	else:
+		Global.distortion_scale -= 0.0004
+	Global.distortion_scale = clamp(Global.distortion_scale, 0.0, 0.08)
 	
 	$CanvasLayer/BinocularsView.visible = Global.usingBinoculars
 	$CanvasLayer/Pointer.visible = not Global.usingBinoculars

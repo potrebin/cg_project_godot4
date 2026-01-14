@@ -1,0 +1,49 @@
+[gd_scene load_steps=4 format=3 uid="uid://dr2octfevywx4"]
+
+[ext_resource type="Texture2D" uid="uid://ci5l0f5yumbqx" path="res://Sprites/button.png" id="1_lti8b"]
+[ext_resource type="Script" uid="uid://by2qoiem8ufbs" path="res://play_button.gd" id="1_ouk20"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ouk20"]
+radius = 83.0
+height = 566.0
+
+[node name="Menu" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+modulate = Color(0, 0, 0, 1)
+offset_right = 1600.0
+offset_bottom = 896.0
+mouse_filter = 2
+
+[node name="PlayButton" type="Area2D" parent="."]
+z_index = 1
+position = Vector2(800, 560)
+script = ExtResource("1_ouk20")
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayButton"]
+texture = ExtResource("1_lti8b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayButton"]
+visible = false
+z_index = 1
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_ouk20")
+
+[node name="Label" type="Label" parent="PlayButton"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -72.5
+offset_top = -41.5
+offset_right = 72.5
+offset_bottom = 41.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 80
+text = "P  L  A  Y"
+
+[connection signal="mouse_entered" from="PlayButton" to="PlayButton" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="PlayButton" to="PlayButton" method="_on_mouse_exited"]
