@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://c6s5fo424lte7"]
+[gd_scene load_steps=7 format=3 uid="uid://c6s5fo424lte7"]
 
 [ext_resource type="Script" uid="uid://b8iisi37rvast" path="res://player.gd" id="1_4flbx"]
 [ext_resource type="Texture2D" uid="uid://1hoiwufd14dp" path="res://Sprites/pointer.png" id="2_onrkg"]
 [ext_resource type="Texture2D" uid="uid://cs4r5oxv1aadg" path="res://Sprites/binoculars view.png" id="3_i3pqv"]
+[ext_resource type="Texture2D" uid="uid://qc15caki7qeg" path="res://Sprites/stamina frame.png" id="4_sweqy"]
+[ext_resource type="Texture2D" uid="uid://dmrq3l7e5wlxj" path="res://Sprites/stamina bar.png" id="5_2hs0m"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sh265"]
 height = 4.5
@@ -39,5 +41,27 @@ texture = ExtResource("2_onrkg")
 
 [node name="BinocularsView" type="Sprite2D" parent="CanvasLayer"]
 visible = false
+z_index = 5
 texture = ExtResource("3_i3pqv")
 centered = false
+
+[node name="StaminaFrame" type="Sprite2D" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0.39215687)
+z_index = 1
+position = Vector2(13, 13)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_sweqy")
+centered = false
+
+[node name="StaminaBar" type="Sprite2D" parent="CanvasLayer/StaminaFrame"]
+z_index = -1
+texture = ExtResource("5_2hs0m")
+centered = false
+
+[node name="ScreenFade" type="ColorRect" parent="CanvasLayer"]
+visible = false
+self_modulate = Color(0, 0, 0, 1)
+z_index = 15
+offset_right = 1600.0
+offset_bottom = 900.0
+mouse_filter = 2

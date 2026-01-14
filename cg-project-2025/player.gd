@@ -13,9 +13,10 @@ var player_angle = 0  # what direction is the player looking
 var movement_direciton = {'w':0, 'a':0, 's':0, 'd':0}
 
 var stamina = 1000
+var timeSleeping = 0
 
 func _ready() -> void:
-	pass
+	$CanvasLayer/ScreenFade.visible = true
 
 func _physics_process(delta: float) -> void:
 	player_angle = LookAround.rotation.y
@@ -33,7 +34,7 @@ func _physics_process(delta: float) -> void:
 	velocity.x = (-sin(player_angle) * move_player_XZ.x + sin(player_angle + PI/2) * move_player_XZ.y) * delta * movement_speed
 	velocity.z = (-cos(player_angle) * move_player_XZ.x + cos(player_angle + PI/2) * move_player_XZ.y) * delta * movement_speed
 	
-	if is_on_floor():
+	if is_on_floor() and not Global.playerSleeping:
 		velocity.y = 0
 	else:
 		velocity.y += fall_speed * delta
@@ -47,7 +48,8 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("shift"):
 		if stamina > 0:
 			movement_speed = base_movement_speed * (1 + stamina / 1000.0 / 1.6)
-			stamina -= 1
+			if movement_direciton['w'] != 0 or movement_direciton['a'] != 0 or movement_direciton['s'] != 0 or movement_direciton['d'] != 0:
+				stamina -= 1
 	else:
 		movement_speed = base_movement_speed
 	
@@ -65,13 +67,30 @@ func _physics_process(delta: float) -> void:
 				else:
 					target.open()
 			elif target.is_in_group("bed"):
-				stamina += 50
+				position = Vector3(-6.906, 6.889, -24.53)
+				rotation_degrees = Vector3(80.0, 180.0, 0.0)
+				Global.playerSleeping = true
+				LookAround.rotation_degrees = Vector3(0.0, 0.0, 0.0)
 			elif target.is_in_group("binoculars"):
 				Global.inventory['binoculars'] = 1
 				target.queue_free()
-				print("binoculars picked up!")
+	
+	if Global.playerSleeping and Input.is_action_just_pressed("shift"):
+		position = Vector3(-3.312, 5.737, -25.41)
+		Global.playerSleeping = false
+		rotation_degrees = Vector3(0.0, 0.0, 0.0)
+	
+	if Global.playerSleeping:
+		timeSleeping += delta
+	else:
+		timeSleeping = 0
+	
+	if timeSleeping > 4.0:
+		stamina += 1
 	
 	stamina = clamp(stamina, 0, 1000)
+	
+	$CanvasLayer/StaminaFrame/StaminaBar.scale.x = stamina / 1000.0
 	
 	if not Global.usingBinoculars:
 		if Input.is_action_just_pressed("click_r"):
@@ -90,12 +109,15 @@ func _physics_process(delta: float) -> void:
 		if $LookAround/Camera3D.fov < 75:
 			$LookAround/Camera3D.fov += 5
 	
+	if Global.stage == 'intro' and $CanvasLayer/ScreenFade.self_modulate.a > 0:
+		$CanvasLayer/ScreenFade.self_modulate.a -= 0.01
+	
 	move_and_slide()
 
 # Allow the player to look around when moving the mouse
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		if not Global.usingBinoculars:
+		if not Global.usingBinoculars and not Global.playerSleeping:
 			mouse_rotation_hor -= event.relative.x * mouse_sensitivity
 			LookAround.rotation.y = mouse_rotation_hor
 			mouse_rotation_vert = clamp(mouse_rotation_vert - event.relative.y * mouse_sensitivity, deg_to_rad(-80), deg_to_rad(90))
@@ -103,7 +125,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 # Use this method to achieve smooth movement
 func WASD_key_pressed(action, direction):
-	if Input.is_action_pressed(action):
+	if Input.is_action_pressed(action) and not Global.usingBinoculars and not Global.playerSleeping:
 		if movement_direciton[direction] < 1.0:
 			movement_direciton[direction] += 0.1
 	elif movement_direciton[direction] > 0.0:
