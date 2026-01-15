@@ -1,0 +1,408 @@
+[gd_scene load_steps=30 format=3 uid="uid://kbk6yfevcqas"]
+
+[ext_resource type="Script" uid="uid://5dds33vgyqfv" path="res://camera_controller.gd" id="1_lwv55"]
+[ext_resource type="Texture2D" uid="uid://bo0jexi084qfm" path="res://2k_moon.jpg" id="2_cq131"]
+[ext_resource type="PackedScene" uid="uid://n73l5sq15pk8" path="res://ship.tscn" id="3_v4jor"]
+[ext_resource type="Script" uid="uid://dbye8qs53pqrw" path="res://GrabPoint.gd" id="4_cq131"]
+[ext_resource type="PackedScene" uid="uid://c6s5fo424lte7" path="res://player.tscn" id="4_uqejc"]
+[ext_resource type="PackedScene" uid="uid://cr6vdy3yt52v7" path="res://cabin_door.tscn" id="5_n46vc"]
+[ext_resource type="PackedScene" uid="uid://y4cpwymj4f3c" path="res://bed.tscn" id="6_j57xh"]
+[ext_resource type="PackedScene" uid="uid://01vhmsuo88dp" path="res://helm.tscn" id="7_wxpfi"]
+[ext_resource type="PackedScene" uid="uid://bnuitd5ao8tv1" path="res://crate.tscn" id="8_wx763"]
+[ext_resource type="PackedScene" uid="uid://dgy18m2qp03ql" path="res://lantern.tscn" id="9_aosej"]
+[ext_resource type="PackedScene" uid="uid://6an1on88ccdx" path="res://locker.tscn" id="10_wy6r1"]
+[ext_resource type="PackedScene" uid="uid://bb6qhsn4dro8h" path="res://binoculars.tscn" id="11_3ytq3"]
+[ext_resource type="PackedScene" uid="uid://cfnqdsc320g8j" path="res://table_final.tscn" id="12_jphjo"]
+[ext_resource type="PackedScene" uid="uid://cy367el7s07hs" path="res://bottle_box.tscn" id="13_dc44x"]
+[ext_resource type="Shader" uid="uid://cyb2ta58xpc1q" path="res://distort.gdshader" id="14_fikfq"]
+[ext_resource type="Script" uid="uid://ciogpauxysqaf" path="res://TentacleSpawnPoint.gd" id="15_uqejc"]
+[ext_resource type="Script" uid="uid://2pwvom7dth4w" path="res://distort_rect.gd" id="15_wa8n8"]
+[ext_resource type="Script" uid="uid://wfu4hm2pdlk" path="res://tentacle_manager.gd" id="17_v4jor"]
+[ext_resource type="PackedScene" uid="uid://dvr11hl8021aj" path="res://tentacles.tscn" id="19_n46vc"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mwb40"]
+sky_top_color = Color(0.050980393, 0.105882354, 0.16470589, 1)
+sky_horizon_color = Color(0.101960786, 0.13725491, 0.19607843, 1)
+ground_bottom_color = Color(0.019607844, 0.039215688, 0.05882353, 1)
+ground_horizon_color = Color(0.050980393, 0.105882354, 0.16470589, 1)
+ground_energy_multiplier = 0.15
+sun_angle_max = 0.0
+
+[sub_resource type="Sky" id="Sky_80nbo"]
+sky_material = SubResource("ProceduralSkyMaterial_mwb40")
+
+[sub_resource type="Environment" id="Environment_mwb40"]
+background_mode = 2
+sky = SubResource("Sky_80nbo")
+ambient_light_source = 3
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_sky_contribution = 0.0
+ambient_light_energy = 0.02
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.07
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_mwb40"]
+size = Vector2(2000, 2000)
+subdivide_width = 800
+subdivide_depth = 800
+
+[sub_resource type="Shader" id="Shader_80nbo"]
+code = "shader_type spatial;
+
+// Varying to pass vertex position to fragment/light shader
+varying vec3 world_pos;
+
+// Wave parameters
+uniform float wave_speed : hint_range(0.0, 5.0) = 1.0;
+uniform float wave_amplitude : hint_range(0.0, 2.0) = 0.3;
+uniform float wave_frequency : hint_range(0.1, 5.0) = 1.0;
+
+// Water appearance
+uniform vec3 water_color : source_color = vec3(0.04, 0.12, 0.24); // Dark blue for nighttime
+uniform vec3 deep_water_color : source_color = vec3(0.01, 0.05, 0.15); // Even darker for depth
+uniform float roughness : hint_range(0.0, 1.0) = 0.3;
+uniform float metallic : hint_range(0.0, 1.0) = 0.0;
+
+// Normal map strength
+uniform float normal_strength : hint_range(0.0, 2.0) = 1.0;
+
+// Moon reflection parameters
+uniform float reflection_strength : hint_range(0.0, 5.0) = 2.0;
+uniform float reflection_sharpness : hint_range(1.0, 256.0) = 32.0;
+uniform vec3 moon_color : source_color = vec3(1.0, 0.98, 0.9); // Warm white
+
+void vertex() {
+	// Store world position for use in fragment/light shader
+	world_pos = VERTEX;
+
+	// Create multiple overlapping sine waves for realistic ocean motion
+	float wave1 = sin(VERTEX.x * wave_frequency + TIME * wave_speed) * wave_amplitude;
+	float wave2 = cos(VERTEX.z * wave_frequency * 0.7 + TIME * wave_speed * 1.3) * wave_amplitude * 0.5;
+	float wave3 = sin((VERTEX.x + VERTEX.z) * wave_frequency * 0.5 + TIME * wave_speed * 0.8) * wave_amplitude * 0.3;
+
+	// Combine waves and apply to vertex height (Y)
+	VERTEX.y += wave1 + wave2 + wave3;
+
+	// Calculate wave normals for proper lighting
+	// This creates surface normals that follow the wave shape
+	float wave_dx = cos(VERTEX.x * wave_frequency + TIME * wave_speed) * wave_frequency * wave_amplitude;
+	wave_dx += -sin((VERTEX.x + VERTEX.z) * wave_frequency * 0.5 + TIME * wave_speed * 0.8) * wave_frequency * 0.5 * wave_amplitude * 0.3;
+
+	float wave_dz = -sin(VERTEX.z * wave_frequency * 0.7 + TIME * wave_speed * 1.3) * wave_frequency * 0.7 * wave_amplitude * 0.5;
+	wave_dz += -sin((VERTEX.x + VERTEX.z) * wave_frequency * 0.5 + TIME * wave_speed * 0.8) * wave_frequency * 0.5 * wave_amplitude * 0.3;
+
+	vec3 wave_normal = normalize(vec3(-wave_dx, 1.0, -wave_dz));
+	NORMAL = mix(NORMAL, wave_normal, normal_strength);
+}
+
+void fragment() {
+	// Base water color
+	ALBEDO = water_color;
+
+	// Water is not metallic
+	METALLIC = metallic;
+
+	// Moderate roughness for some specular highlights
+	ROUGHNESS = roughness;
+
+	// Slightly transparent for depth effect
+	ALPHA = 0.95;
+}
+
+void light() {
+	// Calculate moon reflection using Blinn-Phong specular model
+
+	// Get the halfway vector between light direction and view direction
+	vec3 half_vector = normalize(LIGHT + VIEW);
+
+	// Calculate specular reflection based on surface normal
+	float specular = pow(max(dot(NORMAL, half_vector), 0.0), reflection_sharpness);
+
+	// Add some variation based on wave movement for shimmer effect
+	float shimmer = sin(TIME * 2.0 + world_pos.x * 0.5) * 0.1 + 0.9;
+	specular *= shimmer;
+
+	// Apply moon color and strength to create the reflection
+	vec3 moon_reflection = moon_color * specular * reflection_strength;
+
+	// Add the reflection to the light contribution
+	// This creates the bright streak of moonlight on the water
+	DIFFUSE_LIGHT += moon_reflection;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_feb5d"]
+render_priority = 0
+shader = SubResource("Shader_80nbo")
+shader_parameter/wave_speed = 1.50000007125
+shader_parameter/wave_amplitude = 0.400000019
+shader_parameter/wave_frequency = 1.0
+shader_parameter/water_color = Color(0.04, 0.12, 0.24, 1)
+shader_parameter/deep_water_color = Color(0.011764706, 0.050980393, 0.3137255, 1)
+shader_parameter/roughness = 0.306000014535
+shader_parameter/metallic = 0.0950000045125
+shader_parameter/normal_strength = 1.570000074575
+shader_parameter/reflection_strength = 5.0
+shader_parameter/reflection_sharpness = 8.030000333924999
+shader_parameter/moon_color = Color(1, 0.98, 0.9, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fc0e3"]
+emission_enabled = true
+emission_energy_multiplier = 1.33
+emission_texture = ExtResource("2_cq131")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ryrav"]
+albedo_texture = ExtResource("2_cq131")
+emission_enabled = true
+emission = Color(1, 0.98, 0.9, 1)
+emission_energy_multiplier = 3.0
+emission_texture = ExtResource("2_cq131")
+disable_receive_shadows = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_80nbo"]
+material = SubResource("StandardMaterial3D_ryrav")
+radius = 3.0
+height = 6.0
+radial_segments = 32
+rings = 16
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_215e1"]
+shader = ExtResource("14_fikfq")
+shader_parameter/strength = 0.0
+shader_parameter/speed = 1.398000066405
+shader_parameter/frequency = 60.2150028602125
+shader_parameter/color_amount = 0.0
+shader_parameter/noise_scale = 1849.462087849445
+shader_parameter/noise_speed = 0.6000000285
+
+[node name="Game" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.9396926, 0.34202012, 0, -0.34202012, 0.9396926, 0, 8, 15)
+script = ExtResource("1_lwv55")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.81915206, -0.43938506, 0.36868784, 0, 0.64278764, 0.76604444, -0.57357645, 0.62750685, -0.5265408, 0, 0, 0)
+visible = false
+light_color = Color(0.78431374, 0.83137256, 0.9098039, 1)
+light_energy = 0.3
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_mwb40")
+
+[node name="Ocean" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7178745, 0.17473745, -0.12361717)
+mesh = SubResource("PlaneMesh_mwb40")
+surface_material_override/0 = SubResource("ShaderMaterial_feb5d")
+
+[node name="Moon" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -882.88104, 652.6075, -710.13776)
+material_override = SubResource("StandardMaterial3D_fc0e3")
+mesh = SubResource("SphereMesh_80nbo")
+
+[node name="Ship" parent="." instance=ExtResource("3_v4jor")]
+
+[node name="GrabPoints" type="Node3D" parent="Ship"]
+
+[node name="Grab01" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.370023, 7.274829, -5.489407)
+script = ExtResource("4_cq131")
+
+[node name="Grab02" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.945831, 7.5216446, 2.3401256)
+script = ExtResource("4_cq131")
+
+[node name="Grab03" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.084994, 7.9800606, 13.846982)
+script = ExtResource("4_cq131")
+
+[node name="Grab04" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.734789, 15.966753, 23.031769)
+script = ExtResource("4_cq131")
+
+[node name="Grab05" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.8123236, 16.86177, 30.475191)
+script = ExtResource("4_cq131")
+
+[node name="Grab06" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8085742, 16.818377, 35.399887)
+script = ExtResource("4_cq131")
+
+[node name="Grab07" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.685584, 16.617476, 25.387957)
+script = ExtResource("4_cq131")
+
+[node name="Grab08" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.959247, 8.048238, 15.451923)
+script = ExtResource("4_cq131")
+
+[node name="Grab09" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.918905, 7.5955467, -1.7813039)
+script = ExtResource("4_cq131")
+
+[node name="Grab10" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.35164, 20.26249, -15.2056465)
+script = ExtResource("4_cq131")
+
+[node name="Grab11" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.9914865, 23.644278, -29.703253)
+script = ExtResource("4_cq131")
+
+[node name="Grab12" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5351048, 23.816362, -30.182556)
+script = ExtResource("4_cq131")
+
+[node name="Grab13" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.524389, 21.473625, -20.147007)
+script = ExtResource("4_cq131")
+
+[node name="Grab14" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 28.117178, 0)
+script = ExtResource("4_cq131")
+
+[node name="Grab15" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 26.183573, 20.442686)
+script = ExtResource("4_cq131")
+
+[node name="Grab16" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 30.57775, -21.713062)
+script = ExtResource("4_cq131")
+
+[node name="Center" type="Marker3D" parent="Ship"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.127281, 0)
+
+[node name="Player" parent="." instance=ExtResource("4_uqejc")]
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 10.381414, 6.381119)
+
+[node name="CabinDoor" parent="." instance=ExtResource("5_n46vc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4, 4.79, -12.928)
+
+[node name="ShipProps" type="Node3D" parent="."]
+
+[node name="Bed" parent="ShipProps" instance=ExtResource("6_j57xh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.019002, 3.4274592, -25.590515)
+
+[node name="Helm" parent="ShipProps" instance=ExtResource("7_wxpfi")]
+transform = Transform3D(-0.16, 0, -2.4159327e-08, 0, 0.16, 0, 2.4159327e-08, 0, -0.16, 0, 15.069222, -14.624527)
+
+[node name="Crates" type="Node3D" parent="ShipProps"]
+
+[node name="Crate" parent="ShipProps/Crates" instance=ExtResource("8_wx763")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -6.9197583, 6.461151, 4.6775494)
+
+[node name="Crate4" parent="ShipProps/Crates" instance=ExtResource("8_wx763")]
+transform = Transform3D(1.299038, 0, 0.75, 0, 1.5, 0, -0.75, 0, 1.299038, -2.5465193, 12.601798, 29.69561)
+
+[node name="Crate5" parent="ShipProps/Crates" instance=ExtResource("8_wx763")]
+transform = Transform3D(-0.89879405, 0, 0.43837112, 0, 1, 0, -0.43837112, 0, -0.89879405, -2.3622124, 14.637782, 29.98538)
+
+[node name="Crate3" parent="ShipProps/Crates" instance=ExtResource("8_wx763")]
+transform = Transform3D(1.3217572, 0, -0.9016418, 0, 1.6, 0, 0.9016418, 0, 1.3217572, -6.502574, 6.132015, 8.424684)
+
+[node name="Crate2" parent="ShipProps/Crates" instance=ExtResource("8_wx763")]
+transform = Transform3D(1.8485062, 0, 0.76356053, 0, 2, 0, -0.76356053, 0, 1.8485062, 6.824137, 6.6172442, 9.573275)
+
+[node name="Lanterns" type="Node3D" parent="ShipProps"]
+
+[node name="Lantern" parent="ShipProps/Lanterns" instance=ExtResource("9_aosej")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.414401, 12.261041, -11.613447)
+
+[node name="Lantern7" parent="ShipProps/Lanterns" instance=ExtResource("9_aosej")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6807203, 13.510961, -27.538576)
+
+[node name="Lantern8" parent="ShipProps/Lanterns" instance=ExtResource("9_aosej")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6807203, 13.510961, -18.232372)
+
+[node name="Lantern5" parent="ShipProps/Lanterns" instance=ExtResource("9_aosej")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.039131, 15.625068, 23.6719)
+
+[node name="Lantern6" parent="ShipProps/Lanterns" instance=ExtResource("9_aosej")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.984774, 15.625068, 23.6719)
+
+[node name="Lantern3" parent="ShipProps/Lanterns" instance=ExtResource("9_aosej")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.212975, 23.065887, -28.360033)
+
+[node name="Lantern4" parent="ShipProps/Lanterns" instance=ExtResource("9_aosej")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.124902, 23.065887, -28.360033)
+
+[node name="Lantern2" parent="ShipProps/Lanterns" instance=ExtResource("9_aosej")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.3130064, 12.261041, -11.613447)
+
+[node name="Locker" parent="ShipProps" instance=ExtResource("10_wy6r1")]
+transform = Transform3D(-0.8, 0, -1.2079664e-07, 0, 0.8, 0, 1.2079664e-07, 0, -0.8, 6.3558855, 3.8543224, -15.594661)
+
+[node name="binoculars" parent="ShipProps" instance=ExtResource("11_3ytq3")]
+transform = Transform3D(-0.8574369, 0, 0.5145892, 0, 1, 0, -0.5145892, 0, -0.8574369, 6.3086367, 6.490472, -16.285635)
+
+[node name="Table" parent="ShipProps" instance=ExtResource("12_jphjo")]
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 2.9534543, 4.38183, -27.634548)
+
+[node name="BottleBox" parent="ShipProps" instance=ExtResource("13_dc44x")]
+transform = Transform3D(0.9251501, 0, 0.37960148, 0, 1, 0, -0.37960148, 0, 0.9251501, 5.9500456, 3.3896275, -22.297564)
+
+[node name="BottleBox2" parent="ShipProps" instance=ExtResource("13_dc44x")]
+transform = Transform3D(0.74517363, 0, 0.6668707, 0, 1, 0, -0.6668707, 0, 0.74517363, 6.4975643, 3.3896275, -20.805143)
+
+[node name="TentacleSpawnGroup" type="Node3D" parent="."]
+
+[node name="Spawn01" type="Marker3D" parent="TentacleSpawnGroup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.154566, -0.6, -9.574005)
+script = ExtResource("15_uqejc")
+
+[node name="Spawn02" type="Marker3D" parent="TentacleSpawnGroup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.23294, -0.5999981, -22.112926)
+script = ExtResource("15_uqejc")
+
+[node name="Spawn03" type="Marker3D" parent="TentacleSpawnGroup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.489862, -0.6, 8.007414)
+script = ExtResource("15_uqejc")
+
+[node name="Spawn04" type="Marker3D" parent="TentacleSpawnGroup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.521992, -0.5999962, 23.2336)
+script = ExtResource("15_uqejc")
+
+[node name="Spawn05" type="Marker3D" parent="TentacleSpawnGroup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.432336, -0.6, 33.56867)
+script = ExtResource("15_uqejc")
+
+[node name="Spawn06" type="Marker3D" parent="TentacleSpawnGroup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.365896, -0.5999962, 43.827625)
+script = ExtResource("15_uqejc")
+
+[node name="Spawn07" type="Marker3D" parent="TentacleSpawnGroup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.158615, -0.5999981, 30.50674)
+script = ExtResource("15_uqejc")
+
+[node name="Spawn08" type="Marker3D" parent="TentacleSpawnGroup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.660141, -0.60000384, 5.88377)
+script = ExtResource("15_uqejc")
+
+[node name="Spawn09" type="Marker3D" parent="TentacleSpawnGroup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.71698, -2.1452117, -15.893063)
+script = ExtResource("15_uqejc")
+
+[node name="Spawn10" type="Marker3D" parent="TentacleSpawnGroup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.874878, -0.6, -37.775223)
+script = ExtResource("15_uqejc")
+
+[node name="Spawn11" type="Marker3D" parent="TentacleSpawnGroup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.65524, -0.5999962, -39.836403)
+script = ExtResource("15_uqejc")
+
+[node name="ScreenFX" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="DistortRect" type="ColorRect" parent="ScreenFX"]
+material = SubResource("ShaderMaterial_215e1")
+offset_right = 1600.0
+offset_bottom = 900.0
+mouse_filter = 2
+script = ExtResource("15_wa8n8")
+
+[node name="TentacleManager" type="Node3D" parent="."]
+script = ExtResource("17_v4jor")
+tentacle_scene = ExtResource("19_n46vc")
+spawns_path = NodePath("../TentacleSpawnGroup")
+grab_points_path = NodePath("../Ship/GrabPoints")
+ship_center_path = NodePath("../Ship/Center")

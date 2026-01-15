@@ -10,6 +10,7 @@ script = ExtResource("2_3jw5c")
 root_bone = &"Bone"
 tip_bone = &"Bone.030"
 override_tip_basis = false
+use_magnet = true
 target_node = NodePath("../../../IKTarget")
 
 [node name="AnimationPlayer" parent="." index="2"]
@@ -18,3 +19,6 @@ speed_scale = 0.35
 
 [node name="IKTarget" type="Node3D" parent="." index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.76232195, 59.03713, -0.1548214)
+
+[node name="IKPole" type="Node3D" parent="." index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 1)
