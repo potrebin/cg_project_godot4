@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c7cfcs5kbj41n"]
+
+[ext_resource type="PackedScene" uid="uid://3dh13lkaiw3y" path="res://Models/axe.glb" id="1_sykeo"]
+
+[node name="Axe" type="Node3D"]
+
+[node name="axe model" parent="." instance=ExtResource("1_sykeo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.33444655, 1.7607948, -0.055262804)
