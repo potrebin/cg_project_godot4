@@ -3,6 +3,7 @@ extends CharacterBody3D
 @onready var LookAround = $LookAround
 @onready var raycast = $LookAround/RayCast3D
 @onready var bottle = preload("res://bottle.tscn")
+@onready var pickableAxe = preload("res://pickable_axe.tscn")
 
 var movement_speed = 200
 var base_movement_speed = 320
@@ -15,6 +16,7 @@ var movement_direciton = {'w':0, 'a':0, 's':0, 'd':0}
 
 var stamina = 1000
 var timeSleeping = 0
+var axeSlashDelay = 0.0
 
 func _ready() -> void:
 	$CanvasLayer/ScreenFade.visible = true
@@ -78,7 +80,19 @@ func _physics_process(delta: float) -> void:
 			elif target.is_in_group("bottles"):
 				if Global.inventory['bottle'] == 0:
 					Global.inventory['bottle'] = 1
+				if Global.inventory['axe'] >= 1:
 					Global.inventory['axe'] = 0
+					var new_axe = pickableAxe.instantiate()
+					get_tree().current_scene.add_child(new_axe)
+					new_axe.global_position = global_position
+					new_axe.position += Vector3(-1.0, -0.5, 0.0)
+					new_axe.rotation_degrees.y = randf_range(-70.0, 70.0)
+					
+			elif target.is_in_group("axe"):
+				if Global.inventory['axe'] == 0:
+					Global.inventory['axe'] = 1
+					Global.inventory['bottle'] = 0
+					target.queue_free()
 	
 	if Global.playerSleeping and Input.is_action_just_pressed("shift"):
 		position = Vector3(-3.312, 5.737, -25.41)
@@ -110,6 +124,18 @@ func _physics_process(delta: float) -> void:
 			Global.inventory['bottle'] = 0
 			throw_bottle()
 	
+	$LookAround/Axe.visible = Global.inventory['axe'] >= 1
+	$LookAround/bottle.visible = Global.inventory['bottle'] >= 1
+	
+	if Input.is_action_just_pressed("click_l"):
+		if Global.inventory['axe'] >= 1:
+			if axeSlashDelay <= 0.0:
+				$LookAround/Axe/AnimationPlayer.play("axe_slash")
+				axeSlashDelay = 0.7
+	
+	if axeSlashDelay > 0.0:
+		axeSlashDelay -= delta
+	
 	if Input.is_action_pressed("jump"):
 		Global.distortion_scale += 0.0002
 	else:
@@ -129,6 +155,9 @@ func _physics_process(delta: float) -> void:
 		$CanvasLayer/ScreenFade.self_modulate.a -= 0.01
 	
 	move_and_slide()
+
+func _process(delta: float) -> void:
+	$LookAround/SubViewportContainer/SubViewport/Camera3D.global_transform = $LookAround/Camera3D.global_transform
 
 # Allow the player to look around when moving the mouse
 func _unhandled_input(event: InputEvent) -> void:

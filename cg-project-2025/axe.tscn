@@ -5,4 +5,9 @@
 [node name="Axe" type="Node3D"]
 
 [node name="axe model" parent="." instance=ExtResource("1_sykeo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.33444655, 1.7607948, -0.055262804)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.334, 2.3, 0)
+
+[node name="Plane" parent="axe model" index="0"]
+layers = 2
+
+[editable path="axe model"]

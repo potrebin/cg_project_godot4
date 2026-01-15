@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://n73l5sq15pk8"]
+[gd_scene load_steps=42 format=3 uid="uid://n73l5sq15pk8"]
 
 [ext_resource type="PackedScene" uid="uid://b5f7qcdujwu07" path="res://Models/ship_body.glb" id="1_l3rv8"]
 
@@ -85,6 +85,18 @@ size = Vector3(4.196289, 2.9779968, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_c1jyk"]
 size = Vector3(18.341797, 1, 22.439453)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_c3vuw"]
+height = 44.730103
+radius = 0.7475586
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xpsff"]
+height = 24.354614
+radius = 0.7475586
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_78o8j"]
+height = 33.866333
+radius = 0.7475586
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_be3o0"]
 size = Vector3(21.620117, 1, 13.876343)
@@ -263,6 +275,18 @@ collision_mask = 4
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ship_body/Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.3467083, -2.3120117)
 shape = SubResource("BoxShape3D_c1jyk")
+
+[node name="CollisionShape3D12" type="CollisionShape3D" parent="ship_body/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.01954794, 27.17789, 0.008845329)
+shape = SubResource("CylinderShape3D_c3vuw")
+
+[node name="CollisionShape3D14" type="CollisionShape3D" parent="ship_body/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.01954794, 28.297337, -21.692766)
+shape = SubResource("CylinderShape3D_xpsff")
+
+[node name="CollisionShape3D13" type="CollisionShape3D" parent="ship_body/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.01954794, 22.761204, 20.352718)
+shape = SubResource("CylinderShape3D_78o8j")
 
 [node name="CollisionShape3D4" type="CollisionShape3D" parent="ship_body/Area3D"]
 transform = Transform3D(1, 0, 0, 0, 0.9890159, 0.1478094, 0, -0.1478094, 0.9890159, 0, 5.3460255, 15.67487)

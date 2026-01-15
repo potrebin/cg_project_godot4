@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://bfvilc2qjpk6e"]
+
+[ext_resource type="PackedScene" uid="uid://3dh13lkaiw3y" path="res://Models/axe.glb" id="1_43u7t"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f6484"]
+size = Vector3(1.6601563, 0.25683594, 1.6679688)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mrae4"]
+size = Vector3(1.7060547, 0.25683594, 0.28320313)
+
+[node name="PickableAxe" type="Area3D" groups=["axe"]]
+
+[node name="axe model" parent="." instance=ExtResource("1_43u7t")]
+transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, 0.657, 0, -0.371)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6784437, 0, 0)
+visible = false
+shape = SubResource("BoxShape3D_f6484")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9130106, 0, 0)
+visible = false
+shape = SubResource("BoxShape3D_mrae4")

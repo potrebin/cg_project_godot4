@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://0amuxgdjaquy"]
+[gd_scene load_steps=27 format=3 uid="uid://0amuxgdjaquy"]
 
 [ext_resource type="Script" uid="uid://5dds33vgyqfv" path="res://camera_controller.gd" id="1_80nbo"]
 [ext_resource type="Texture2D" uid="uid://bo0jexi084qfm" path="res://2k_moon.jpg" id="2_fc0e3"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://cy367el7s07hs" path="res://bottle_box.tscn" id="12_7sc4i"]
 [ext_resource type="PackedScene" uid="uid://cfnqdsc320g8j" path="res://table_final.tscn" id="12_215e1"]
 [ext_resource type="Shader" uid="uid://cyb2ta58xpc1q" path="res://distort.gdshader" id="13_lc2xo"]
+[ext_resource type="PackedScene" uid="uid://bfvilc2qjpk6e" path="res://pickable_axe.tscn" id="14_80cx4"]
 [ext_resource type="Script" uid="uid://2pwvom7dth4w" path="res://distort_rect.gd" id="15_7sc4i"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mwb40"]
@@ -320,6 +321,9 @@ transform = Transform3D(0.9251501, 0, 0.37960148, 0, 1, 0, -0.37960148, 0, 0.925
 
 [node name="BottleBox2" parent="ShipProps" instance=ExtResource("12_7sc4i")]
 transform = Transform3D(0.74517363, 0, 0.6668707, 0, 1, 0, -0.6668707, 0, 0.74517363, 6.4975643, 3.3896275, -20.805143)
+
+[node name="PickableAxe" parent="ShipProps" instance=ExtResource("14_80cx4")]
+transform = Transform3D(-0.9627814, 0, 0.27028126, 0, 1, 0, -0.27028126, 0, -0.9627814, 0.49909484, 11.569309, 31.992546)
 
 [node name="TentacleSpawnGroup" type="Node3D" parent="."]
 

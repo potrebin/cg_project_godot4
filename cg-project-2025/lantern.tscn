@@ -18,8 +18,9 @@ shape = SubResource("BoxShape3D_kxgpu")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2201312, 0.013165772)
+layers = 3
 light_color = Color(0.9999997, 0.7926101, 0.46447814, 1)
 light_energy = 2.2
-light_specular = 0.0
+light_specular = 0.2
 shadow_enabled = true
 omni_range = 80.0

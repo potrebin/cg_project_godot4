@@ -1,10 +1,47 @@
-[gd_scene load_steps=7 format=3 uid="uid://c6s5fo424lte7"]
+[gd_scene load_steps=12 format=3 uid="uid://c6s5fo424lte7"]
 
 [ext_resource type="Script" uid="uid://b8iisi37rvast" path="res://player.gd" id="1_4flbx"]
 [ext_resource type="Texture2D" uid="uid://1hoiwufd14dp" path="res://Sprites/pointer.png" id="2_onrkg"]
+[ext_resource type="PackedScene" uid="uid://m6nt5yi3l23p" path="res://Models/bottle.glb" id="3_1jxqw"]
 [ext_resource type="Texture2D" uid="uid://cs4r5oxv1aadg" path="res://Sprites/binoculars view.png" id="3_i3pqv"]
 [ext_resource type="Texture2D" uid="uid://qc15caki7qeg" path="res://Sprites/stamina frame.png" id="4_sweqy"]
 [ext_resource type="Texture2D" uid="uid://dmrq3l7e5wlxj" path="res://Sprites/stamina bar.png" id="5_2hs0m"]
+[ext_resource type="PackedScene" uid="uid://c7cfcs5kbj41n" path="res://axe.tscn" id="6_2hs0m"]
+
+[sub_resource type="Animation" id="Animation_dw050"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation:z")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-0.74882096, -0.05, 0, 0.05, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_1jxqw"]
+resource_name = "axe_slash"
+length = 0.3
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation:z")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(-0.74882096, -0.05, 0, 0.05, 0, -1.919, -0.006723255, 0, 0.009943413, 0, -0.74882096, -0.016666668, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.1, 0.3)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b26j0"]
+_data = {
+&"RESET": SubResource("Animation_dw050"),
+&"axe_slash": SubResource("Animation_1jxqw")
+}
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sh265"]
 height = 4.5
@@ -25,8 +62,44 @@ target_position = Vector3(0, 0, -7)
 collide_with_areas = true
 
 [node name="Camera3D" type="Camera3D" parent="LookAround"]
+cull_mask = 1048573
 current = true
 fov = 21.4
+
+[node name="Axe" parent="LookAround" instance=ExtResource("6_2hs0m")]
+transform = Transform3D(-0.19343519, 0.11202015, 1.4832515, -1.0107234, 1.0875049, -0.21394345, -1.0913393, -1.0270271, -0.06476021, 2.4158108, -2.5179527, -2.189484)
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="LookAround/Axe"]
+libraries = {
+&"": SubResource("AnimationLibrary_b26j0")
+}
+
+[node name="bottle" parent="LookAround" instance=ExtResource("3_1jxqw")]
+transform = Transform3D(0.14999999, 0, 0, 0, 0.14137086, 0.050142586, 0, -0.050142586, 0.14137086, 1.8986709, -1.8889978, -1.8383937)
+visible = false
+
+[node name="Plane" parent="LookAround/bottle" index="0"]
+layers = 2
+
+[node name="Cylinder" parent="LookAround/bottle" index="1"]
+layers = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="LookAround"]
+offset_right = 1600.0
+offset_bottom = 900.0
+
+[node name="SubViewport" type="SubViewport" parent="LookAround/SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1600, 900)
+render_target_clear_mode = 1
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="LookAround/SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+cull_mask = 506882
+near = 0.01
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
@@ -65,3 +138,5 @@ z_index = 15
 offset_right = 1600.0
 offset_bottom = 900.0
 mouse_filter = 2
+
+[editable path="LookAround/bottle"]
