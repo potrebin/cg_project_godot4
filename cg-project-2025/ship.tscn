@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://n73l5sq15pk8"]
+[gd_scene load_steps=54 format=3 uid="uid://n73l5sq15pk8"]
 
 [ext_resource type="PackedScene" uid="uid://b5f7qcdujwu07" path="res://Models/ship_body.glb" id="1_l3rv8"]
 
@@ -148,6 +148,9 @@ size = Vector3(5.4121094, 6.788086, 1.1225586)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kmkfh"]
 size = Vector3(1.085272, 7.818756, 8.994629)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aja30"]
+size = Vector3(1.3828125, 4.8115234, 32.27588)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2520t"]
 size = Vector3(10.754578, 7.4404297, 0.9082031)
@@ -404,6 +407,14 @@ shape = SubResource("BoxShape3D_kmkfh")
 [node name="CollisionShape3D27" type="CollisionShape3D" parent="ship_body/Area3D"]
 transform = Transform3D(1, 0, 0, 0, 0.9713751, 0.23755023, 0, -0.23755023, 0.9713751, -9.602346, 12.161404, 23.82793)
 shape = SubResource("BoxShape3D_kmkfh")
+
+[node name="CollisionShape3D31" type="CollisionShape3D" parent="ship_body/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 0.9999998, 0, 0, 0, 0.9999998, -9.793753, 5.097634, 5.4265976)
+shape = SubResource("BoxShape3D_aja30")
+
+[node name="CollisionShape3D32" type="CollisionShape3D" parent="ship_body/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 0.9999998, 0, 0, 0, 0.9999998, 9.830097, 5.097634, 5.4265976)
+shape = SubResource("BoxShape3D_aja30")
 
 [node name="CollisionShape3D24" type="CollisionShape3D" parent="ship_body/Area3D"]
 transform = Transform3D(0.604752, 0, -0.7964137, 0, 1, 0, 0.7964137, 0, 0.6047519, -5.876205, 13.145853, 31.039286)

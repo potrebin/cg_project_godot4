@@ -26,7 +26,7 @@ func _process(delta: float) -> void:
 			distortion_scale = 0.0
 	elif game_over:
 		distortion_scale += 0.0005
-		if distortion_scale >= 1.1:
+		if distortion_scale >= 0.9:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 			has_played = true
 			get_tree().change_scene_to_file("res://menu.tscn")

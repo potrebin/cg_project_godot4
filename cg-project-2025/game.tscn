@@ -220,15 +220,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.084994, 7.8381424, 13.8469
 script = ExtResource("4_e36ub")
 
 [node name="Grab04" type="Marker3D" parent="Ship/GrabPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.321713, 16.082088, 23.031769)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.321713, 15.940062, 23.031769)
 script = ExtResource("4_e36ub")
 
 [node name="Grab05" type="Marker3D" parent="Ship/GrabPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.214511, 17.176998, 30.736193)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.214511, 17.005085, 30.736193)
 script = ExtResource("4_e36ub")
 
 [node name="Grab06" type="Marker3D" parent="Ship/GrabPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8085742, 16.991056, 35.562576)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8085742, 16.859966, 35.562576)
 script = ExtResource("4_e36ub")
 
 [node name="Grab07" type="Marker3D" parent="Ship/GrabPoints"]
@@ -252,11 +252,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.9914865, 23.605722, -29.26
 script = ExtResource("4_e36ub")
 
 [node name="Grab12" type="Marker3D" parent="Ship/GrabPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5351048, 23.77603, -29.369888)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.600062, 23.77603, -29.369888)
+script = ExtResource("4_e36ub")
+
+[node name="Grab23" type="Marker3D" parent="Ship/GrabPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4155388, 23.77603, -29.369888)
 script = ExtResource("4_e36ub")
 
 [node name="Grab13" type="Marker3D" parent="Ship/GrabPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.469009, 21.473625, -20.147007)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.191043, 21.497406, -20.147007)
 script = ExtResource("4_e36ub")
 
 [node name="Grab14" type="Marker3D" parent="Ship/GrabPoints"]
