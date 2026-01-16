@@ -28,6 +28,6 @@ In order to run the game in Godot:
 
 ### Launch Guide (Windows executable)
 
-1. Access this [Google Drive link](https://drive.google.com/drive/folders/11ZzY9g2W_P0qKzqwXunJ6knNs5-Nfbcd?usp=sharing)
-2. Download the folder
+1. Access this [Google Drive link](https://drive.google.com/file/d/1FPMoYbh74-7qQKKInixIGFtXlqCpaVUN/view?usp=sharing)
+2. Download the file (executable)
 3. Once downloaded, run the `.exe` game file
