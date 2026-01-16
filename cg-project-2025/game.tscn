@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://0amuxgdjaquy"]
+[gd_scene load_steps=33 format=3 uid="uid://0amuxgdjaquy"]
 
 [ext_resource type="Script" uid="uid://5dds33vgyqfv" path="res://camera_controller.gd" id="1_80nbo"]
 [ext_resource type="Texture2D" uid="uid://bo0jexi084qfm" path="res://2k_moon.jpg" id="2_fc0e3"]
@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://vkey8enssriy" path="res://radio.tscn" id="16_x5p1p"]
 [ext_resource type="Script" uid="uid://wfu4hm2pdlk" path="res://tentacle_manager.gd" id="17_x5p1p"]
 [ext_resource type="PackedScene" uid="uid://dvr11hl8021aj" path="res://tentacles.tscn" id="18_qhcbd"]
+[ext_resource type="PackedScene" uid="uid://cve7unrd1gj85" path="res://tentacle_decorative.tscn" id="22_x5p1p"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mwb40"]
 sky_top_color = Color(0.050980393, 0.105882354, 0.16470589, 1)
@@ -442,3 +443,27 @@ offset_right = 1600.0
 offset_bottom = 900.0
 mouse_filter = 2
 script = ExtResource("15_7sc4i")
+
+[node name="tentacle_decorative" parent="." instance=ExtResource("22_x5p1p")]
+transform = Transform3D(-0.25881907, 2.9802326e-08, -0.96592593, -0.043177307, 0.99900025, 0.011569292, 0.96496046, 0.044700425, -0.2585604, 26.296722, -6, 42.0229)
+
+[node name="tentacle_decorative2" parent="." instance=ExtResource("22_x5p1p")]
+transform = Transform3D(1, 0, 0, 0, 0.85690975, 0.0332917, 0, -0.030522928, 0.9346411, 8, -9.389374, -54.38133)
+
+[node name="tentacle_decorative3" parent="." instance=ExtResource("22_x5p1p")]
+transform = Transform3D(-0.8164501, 0, 0.577416, 0, 1.1870174, 0, -0.577416, 0, -0.8164501, -30.597155, -9.175861, 27.875336)
+
+[node name="tentacle_decorative7" parent="." instance=ExtResource("22_x5p1p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.245804, -18.921198, -55.981365)
+
+[node name="tentacle_decorative4" parent="." instance=ExtResource("22_x5p1p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.35157, -24.992838, -17.541454)
+
+[node name="tentacle_decorative6" parent="." instance=ExtResource("22_x5p1p")]
+transform = Transform3D(-0.24746507, -0.09932713, 0.9637922, -0.2236013, 0.9737344, 0.0429395, -0.9427426, -0.20487912, -0.2631749, -57.94303, -11.74254, -4.001091)
+
+[node name="tentacle_decorative8" parent="." instance=ExtResource("22_x5p1p")]
+transform = Transform3D(-0.24746507, -0.09932712, 0.96379215, -0.22360128, 0.9737344, 0.042939484, -0.9427426, -0.20487913, -0.26317492, 33.18719, -28.693323, 0.45658112)
+
+[node name="tentacle_decorative5" parent="." instance=ExtResource("22_x5p1p")]
+transform = Transform3D(-0.57823944, -0.25564823, -0.77477944, -0.152907, 0.9667699, -0.20487913, 0.8014104, 0, -0.59811485, -41.947052, -20.343678, -23.936113)
