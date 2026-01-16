@@ -6,8 +6,8 @@ class_name TentacleManager
 @export var spawns_path: NodePath
 @export var grab_points_path: NodePath
 
-@export var spawn_interval_min: float = 7.0
-@export var spawn_interval_max: float = 15.0
+@export var spawn_interval_min: float = 1.0
+@export var spawn_interval_max: float = 3.0
 @export var spawn_count_min: int = 1
 @export var spawn_count_max: int = 2
 
@@ -54,7 +54,8 @@ func _schedule_next_wave():
 	tw.finished.connect(_spawn_wave)
 
 func _spawn_wave():
-	# 1–2 тентакли
+	print("spawning!")
+	# 1–2 tentacles
 	var want = randi_range(spawn_count_min, spawn_count_max)
 
 	for i in range(want):
@@ -66,11 +67,11 @@ func _spawn_wave():
 		if point == null:
 			break
 
-		# резервируем точку (чтобы две тентакли не выбрали одну)
-		var ok = point.reserve(spawn) # временно можно резервировать на spawn, но лучше на tentacle
-		# Лучше резервировать на тентаклю, но тентакля ещё не создана. Поэтому:
-		# 1) создаём тентаклю
-		# 2) пере-резервируем на неё
+		# reserve the point (so two tentacles don't choose the same one)
+		var ok = point.reserve(spawn) # for now you can reserve on spawn, but better on tentacle
+		# Better to reserve on the tentacle, but the tentacle isn't created yet. So:
+		# 1) create the tentacle
+		# 2) re-reserve on it
 		if not ok:
 			continue
 
@@ -78,21 +79,21 @@ func _spawn_wave():
 		tentacle.ship_center = ship_center
 		add_child(tentacle)
 
-		# пере-резервируем корректно
+		# re-reserve correctly
 		point.release(spawn)
 		point.reserve(tentacle)
 
 		spawn.set_active(tentacle)
 		tentacle.manager = self
 
-		# подписки на события
+		# event subscriptions
 		tentacle.grabbed.connect(_on_tentacle_grabbed)
 		tentacle.released.connect(_on_tentacle_released)
 		tentacle.despawned.connect(_on_tentacle_despawned.bind(spawn, point, tentacle))
 
 		tentacle.activate(spawn, point)
 
-	# планируем следующий вызов
+	# schedule the next call
 	_schedule_next_wave()
 
 func _pick_free_spawn() -> TentacleSpawnPoint:
@@ -105,7 +106,7 @@ func _pick_free_spawn() -> TentacleSpawnPoint:
 	return candidates[randi() % candidates.size()]
 
 func _pick_random_of_three_nearest_free_grab(from_pos: Vector3) -> GrabPoint:
-	var candidates: Array = []  # будем хранить пары [distance, GrabPoint]
+	var candidates: Array = []  # we will store pairs [distance, GrabPoint]
 
 	for p in grab_points:
 		if not p.is_free():
@@ -116,11 +117,11 @@ func _pick_random_of_three_nearest_free_grab(from_pos: Vector3) -> GrabPoint:
 	if candidates.is_empty():
 		return null
 
-	# сортируем по дистанции
+	# sort by distance
 	candidates.sort_custom(func(a, b): return a[0] < b[0])
 
-	# берём топ-3 (или меньше если точек мало)
-	var k = min(3, candidates.size())
+	# take top-3 (or fewer if there are few points)
+	var k = min(2, candidates.size())
 	var pick = candidates[randi() % k][1]
 	return pick
 
@@ -131,7 +132,7 @@ func _on_tentacle_released(_point: GrabPoint):
 	_check_lose_condition()
 
 func _on_tentacle_despawned(spawn: TentacleSpawnPoint, point: GrabPoint, tentacle: Tentacle):
-	# освободить spawn и на всякий случай точку
+	# free the spawn and just in case the point
 	spawn.clear_active(tentacle)
 	if point:
 		point.release(tentacle)
@@ -151,11 +152,11 @@ func _check_lose_condition():
 			print("WARNING: %d points captured. Starting lose timer..." % captured)
 			lose_timer.start()
 	else:
-		# если стало меньше 7 — отменяем таймер поражения
+		# if it dropped below 7 — cancel the lose timer
 		if not lose_timer.is_stopped():
 			print("INFO: captured dropped to %d. Lose timer cancelled." % captured)
 			lose_timer.stop()
 
 func _on_lose_timer_timeout():
-	# Финал пока просто в консоль
+	# For now the finale is just in the console
 	print("GAME OVER: Kraken captured %d points for %0.1f seconds!" % [needed_to_lose, lose_delay])

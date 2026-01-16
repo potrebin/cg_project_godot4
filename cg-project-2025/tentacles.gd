@@ -7,17 +7,17 @@ signal despawned()
 
 enum State { INACTIVE, EMERGE, REACH, HOLD, RETURN }
 
-@export var emerge_depth: float = 20          # полная "длина выхода" из воды
-@export var emerge_time: float = 6.0           # было 1.0 → теперь 2 секунды
+@export var emerge_depth: float = 20          # full "exit length" from the water
+@export var emerge_time: float = 6.0           # was 1.0 → now 2 seconds
 @export var emerge_min_ratio: float = 0.2      # 20%
 @export var emerge_max_ratio: float = 0.6      # 60%
 @export var reach_time: float = 4.0
 @export var return_time: float = 4.0
-@export var grab_distance: float = 0.25    # дистанция для "считаем, что схватила"
+@export var grab_distance: float = 0.25    # distance at which we "consider it grabbed"
 
 @onready var ik_target: Node3D = $IKTarget
 @onready var ik: SkeletonIK3D = $Armature/Skeleton3D/TentacleIK
-@onready var anim: AnimationPlayer = $"AnimationPlayer" # если есть
+@onready var anim: AnimationPlayer = $"AnimationPlayer" # if present
 @onready var pole: Node3D = $IKPole
 
 var manager: Node = null
@@ -38,7 +38,7 @@ func _process(_delta):
 	if ik.use_magnet:
 		ik.magnet = pole.global_position
 
-	# Ориентация кончика через IKTarget
+	# Tip orientation via IKTarget
 	if state == State.REACH or state == State.HOLD:
 		_update_target_rotation_to_ship()
 
@@ -49,10 +49,10 @@ func activate(from_spawn: TentacleSpawnPoint, to_point: GrabPoint) -> void:
 	_surface_pos = spawn_point.global_position
 	_water_pos = _surface_pos - Vector3.UP * emerge_depth
 
-	# появляемся под водой
+	# appear underwater
 	global_position = _water_pos
 
-	# IKTarget сначала рядом с кончиком/вдоль тентакли — можно просто поставить на себя
+	# IKTarget starts near the tip / along the tentacle — you can just set it to self
 	ik_target.global_position = global_position
 	
 	var ratio := randf_range(emerge_min_ratio, emerge_max_ratio)
@@ -77,11 +77,11 @@ func _begin_reach():
 	state = State.REACH
 
 	if target_point == null:
-		# нет цели — уходим обратно
+		# no target — go back
 		begin_return()
 		return
 
-	# Двигаем IKTarget к точке захвата
+	# Move IKTarget to the grab point
 	var tw = create_tween()
 	tw.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	tw.tween_property(ik_target, "global_position", target_point.global_position, reach_time)
@@ -91,27 +91,27 @@ func _on_reach_finished():
 	if state != State.REACH:
 		return
 
-	# Проверка, что мы достаточно близко (можно сделать точнее через BoneAttachment кончика)
+	# Check that we are close enough (can be made more precise via tip BoneAttachment)
 	var tip_pos = ik_target.global_position
 	var d = tip_pos.distance_to(target_point.global_position)
 
 	if d <= grab_distance:
 		state = State.HOLD
-		# фиксируем IKTarget ровно на точке (корабль статичен)
+		# lock IKTarget exactly on the point (ship is static)
 		ik_target.global_position = target_point.global_position
 
 		target_point.occupy(self)
 		emit_signal("grabbed", target_point)
 
 	else:
-		# не дотянулись — возвращаемся
+		# didn't reach — return
 		begin_return()
 
 func begin_return():
 	if state == State.RETURN:
 		return
 
-	# Освобождаем точку, если была
+	# Release the point if there was one
 	if target_point:
 		target_point.release(self)
 		emit_signal("released", target_point)
@@ -124,20 +124,20 @@ func begin_return():
 	tw.finished.connect(_on_return_finished)
 
 func _on_return_finished():
-	# сообщаем менеджеру, что спавн освободился
+	# notify manager that the spawn was freed
 	emit_signal("despawned")
 	queue_free()
 
-# Это на будущее: удар топором/бутылкой будет вызывать это
+# This is for the future: an axe/bottle hit will call this
 func take_hit():
-	# Только в HOLD имеет смысл, но можно разрешить всегда
+	# Only makes sense in HOLD, but can allow always
 	begin_return()
 	
 func _update_target_rotation_to_ship():
 	if ship_center == null:
 		return
 
-	# хотим, чтобы "вперёд" IKTarget смотрело на центр корабля
+	# we want IKTarget's "forward" to look at the ship's center
 	var center_pos = ship_center.global_position
 	ik_target.look_at(center_pos, Vector3.UP)
-	ik_target.rotate_object_local(Vector3.UP, deg_to_rad(-270)) # пример
+	ik_target.rotate_object_local(Vector3.UP, deg_to_rad(-270)) # example

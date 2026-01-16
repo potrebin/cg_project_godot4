@@ -6,9 +6,12 @@
 [node name="tentacle" instance=ExtResource("1_6xmtv")]
 script = ExtResource("2_3jw5c")
 
+[node name="Skeleton3D" parent="Armature" index="0"]
+animate_physical_bones = false
+
 [node name="TentacleIK" type="SkeletonIK3D" parent="Armature/Skeleton3D" index="1"]
 root_bone = &"Bone"
-tip_bone = &"Bone.030"
+tip_bone = &"Bone.040"
 override_tip_basis = false
 use_magnet = true
 target_node = NodePath("../../../IKTarget")
