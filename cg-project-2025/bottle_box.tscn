@@ -7,6 +7,7 @@
 size = Vector3(0.8005371, 0.80270386, 0.94628906)
 
 [node name="BottleBox" type="StaticBody3D" groups=["bottles"]]
+collision_layer = 5
 
 [node name="cardboard_box" parent="." instance=ExtResource("1_s06yn")]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)

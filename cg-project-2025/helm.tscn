@@ -1,9 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://01vhmsuo88dp"]
+[gd_scene load_steps=5 format=3 uid="uid://01vhmsuo88dp"]
 
 [ext_resource type="PackedScene" uid="uid://dr51e5t3l0ieo" path="res://Models/helm.glb" id="1_kiic0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0bgn6"]
 size = Vector3(21.226929, 25.195465, 7.6054688)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_kiic0"]
+radius = 8.63623
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_0bgn6"]
+height = 6.061035
+radius = 2.9936523
 
 [node name="Helm" type="StaticBody3D"]
 
@@ -13,3 +20,16 @@ size = Vector3(21.226929, 25.195465, 7.6054688)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.046569824, 12.097733, 0.30273438)
 visible = false
 shape = SubResource("BoxShape3D_0bgn6")
+
+[node name="Area3D" type="Area3D" parent="."]
+visible = false
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 14.2188835, 3.0824594)
+shape = SubResource("CylinderShape3D_kiic0")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.0045052, 0.088051796)
+shape = SubResource("CylinderShape3D_0bgn6")

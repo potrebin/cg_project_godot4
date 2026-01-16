@@ -29,6 +29,8 @@ var state: State = State.INACTIVE
 var _water_pos: Vector3
 var _surface_pos: Vector3
 
+var hp = 3
+
 func _ready():
 	ik.override_tip_basis = false
 	ik.use_magnet = true
@@ -38,9 +40,6 @@ func _process(_delta):
 	if ik.use_magnet:
 		ik.magnet = pole.global_position
 
-	# Tip orientation via IKTarget
-	if state == State.REACH or state == State.HOLD:
-		_update_target_rotation_to_ship()
 
 func activate(from_spawn: TentacleSpawnPoint, to_point: GrabPoint) -> void:
 	spawn_point = from_spawn
@@ -106,6 +105,8 @@ func _on_reach_finished():
 	else:
 		# didn't reach — return
 		begin_return()
+	
+	Global.show_distortions = 1.0
 
 func begin_return():
 	if state == State.RETURN:
@@ -129,15 +130,9 @@ func _on_return_finished():
 	queue_free()
 
 # This is for the future: an axe/bottle hit will call this
-func take_hit():
-	# Only makes sense in HOLD, but can allow always
-	begin_return()
+func take_hit(damage):
+	hp -= damage
+	if hp <= 0:
+		begin_return()
+		Global.score += 1
 	
-func _update_target_rotation_to_ship():
-	if ship_center == null:
-		return
-
-	# we want IKTarget's "forward" to look at the ship's center
-	var center_pos = ship_center.global_position
-	ik_target.look_at(center_pos, Vector3.UP)
-	ik_target.rotate_object_local(Vector3.UP, deg_to_rad(-270)) # example

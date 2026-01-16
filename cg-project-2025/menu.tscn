@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dr2octfevywx4"]
+[gd_scene load_steps=5 format=3 uid="uid://dr2octfevywx4"]
 
 [ext_resource type="Texture2D" uid="uid://ci5l0f5yumbqx" path="res://Sprites/button.png" id="1_lti8b"]
+[ext_resource type="Script" uid="uid://d4k3pb8d6tji3" path="res://menu.gd" id="1_mae5d"]
 [ext_resource type="Script" uid="uid://by2qoiem8ufbs" path="res://play_button.gd" id="1_ouk20"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ouk20"]
@@ -8,6 +9,7 @@ radius = 83.0
 height = 566.0
 
 [node name="Menu" type="Node2D"]
+script = ExtResource("1_mae5d")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 modulate = Color(0, 0, 0, 1)
@@ -44,6 +46,25 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 80
 text = "P  L  A  Y"
+
+[node name="ScoreLabel" type="Label" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 257.0
+offset_top = 160.0
+offset_right = 1383.0
+offset_bottom = 381.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 50
+text = "YOU DIED
+Score: 20"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="mouse_entered" from="PlayButton" to="PlayButton" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="PlayButton" to="PlayButton" method="_on_mouse_exited"]

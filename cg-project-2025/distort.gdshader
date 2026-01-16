@@ -11,7 +11,6 @@ uniform float noise_scale : hint_range(0.0, 2000.0) = 500.0; // size of speckles
 uniform float noise_speed : hint_range(0.0, 20.0) = 6.0; // how fast it changes
 
 float hash(vec2 p) {
-    // cheap deterministic "random"
     return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
 }
 

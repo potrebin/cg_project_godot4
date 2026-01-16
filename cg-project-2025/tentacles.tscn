@@ -1,7 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://dvr11hl8021aj"]
+[gd_scene load_steps=5 format=3 uid="uid://dvr11hl8021aj"]
 
 [ext_resource type="PackedScene" uid="uid://ejgpdlgbkgcj" path="res://Models/tentacle.glb" id="1_6xmtv"]
 [ext_resource type="Script" uid="uid://dvnwehm4isf2r" path="res://tentacles.gd" id="2_3jw5c"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3jw5c"]
+radius = 0.35351563
+height = 2.1416016
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ok67f"]
+radius = 0.37060547
+height = 3.114502
 
 [node name="tentacle" instance=ExtResource("1_6xmtv")]
 script = ExtResource("2_3jw5c")
@@ -15,6 +23,45 @@ tip_bone = &"Bone.040"
 override_tip_basis = false
 use_magnet = true
 target_node = NodePath("../../../IKTarget")
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="2"]
+transform = Transform3D(0.9999025, 0.0139622195, 2.3951998e-07, -0.013962226, 0.99990207, 4.8124964e-08, -2.3882458e-07, -5.1464486e-08, 1, 0.8117712, 58.135033, -2.9921698e-06)
+bone_name = "Bone.032"
+bone_idx = 38
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="0" groups=["tentacle"]]
+collision_layer = 5
+collision_mask = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/BoneAttachment3D/StaticBody3D" index="0"]
+transform = Transform3D(1, 1.2291372e-14, 0, 1.2290994e-14, 1, 0, 0, -1.5951684e-12, 1, -0.059686005, -0.000831604, -1.4297484e-08)
+shape = SubResource("CapsuleShape3D_3jw5c")
+
+[node name="BoneAttachment3D2" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="3"]
+transform = Transform3D(0.9999025, 0.013962206, 2.4024786e-07, -0.013962213, 0.99990207, 4.8114845e-08, -2.3955252e-07, -5.146453e-08, 1, 0.78515565, 56.22896, -2.8940651e-06)
+bone_name = "Bone.033"
+bone_idx = 36
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Armature/Skeleton3D/BoneAttachment3D2" index="0" groups=["tentacle"]]
+collision_layer = 5
+collision_mask = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/BoneAttachment3D2/StaticBody3D" index="0"]
+transform = Transform3D(1, 1.23289135e-14, -2.2168933e-12, 1.2328467e-14, 1, 2.0250468e-13, 0, -1.8758328e-12, 1, -0.059685946, 0.06995773, -1.4297939e-08)
+shape = SubResource("CapsuleShape3D_3jw5c")
+
+[node name="BoneAttachment3D3" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="4"]
+transform = Transform3D(0.9999025, 0.0139622, 2.3951247e-07, -0.013962206, 0.99990207, 4.8125077e-08, -2.3881708e-07, -5.1464486e-08, 1, 0.7452326, 53.369854, -2.7469084e-06)
+bone_name = "Bone.028"
+bone_idx = 33
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Armature/Skeleton3D/BoneAttachment3D3" index="0" groups=["tentacle"]]
+collision_layer = 5
+collision_mask = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/BoneAttachment3D3/StaticBody3D" index="0"]
+transform = Transform3D(1, 1.2291392e-14, -2.2168933e-12, 1.2290902e-14, 1, 9.166001e-13, -5.7127636e-12, -3.3040237e-12, 1, -0.059685886, 0.6272087, -1.4297939e-08)
+shape = SubResource("CapsuleShape3D_ok67f")
 
 [node name="AnimationPlayer" parent="." index="2"]
 active = false

@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @onready var LookAround = $LookAround
 @onready var raycast = $LookAround/RayCast3D
+@onready var axeRaycast = $LookAround/AxeRayCast
 @onready var bottle = preload("res://bottle.tscn")
 @onready var pickableAxe = preload("res://pickable_axe.tscn")
 
@@ -123,6 +124,7 @@ func _physics_process(delta: float) -> void:
 		if Global.inventory['bottle'] == 1:
 			Global.inventory['bottle'] = 0
 			throw_bottle()
+			
 	
 	$LookAround/Axe.visible = Global.inventory['axe'] >= 1
 	$LookAround/bottle.visible = Global.inventory['bottle'] >= 1
@@ -132,15 +134,17 @@ func _physics_process(delta: float) -> void:
 			if axeSlashDelay <= 0.0:
 				$LookAround/Axe/AnimationPlayer.play("axe_slash")
 				axeSlashDelay = 0.7
+				if axeRaycast.is_colliding():
+					var target = axeRaycast.get_collider()
+					if target.is_in_group("tentacle"):
+						var new_particles = Global.bloodParticles.instantiate()
+						get_tree().current_scene.add_child(new_particles)
+						new_particles.position = target.global_position
+						
+						target.get_parent().get_parent().get_parent().get_parent().take_hit(2)
 	
 	if axeSlashDelay > 0.0:
 		axeSlashDelay -= delta
-	
-	if Input.is_action_pressed("jump"):
-		Global.distortion_scale += 0.0002
-	else:
-		Global.distortion_scale -= 0.0004
-	Global.distortion_scale = clamp(Global.distortion_scale, 0.0, 0.08)
 	
 	$CanvasLayer/BinocularsView.visible = Global.usingBinoculars
 	$CanvasLayer/Pointer.visible = not Global.usingBinoculars

@@ -6,9 +6,9 @@ class_name TentacleManager
 @export var spawns_path: NodePath
 @export var grab_points_path: NodePath
 
-@export var spawn_interval_min: float = 1.0
-@export var spawn_interval_max: float = 3.0
-@export var spawn_count_min: int = 1
+@export var spawn_interval_min: float = 7.0
+@export var spawn_interval_max: float = 16.0
+@export var spawn_count_min: int = 2
 @export var spawn_count_max: int = 2
 
 @export var needed_to_lose: int = 7
@@ -23,7 +23,7 @@ var grab_points: Array[GrabPoint] = []
 var lose_timer: Timer
 
 func _ready():
-	print("TentacleManager READY")
+	#print("TentacleManager READY")
 	
 	randomize()
 
@@ -42,8 +42,8 @@ func _ready():
 	lose_timer.timeout.connect(_on_lose_timer_timeout)
 	add_child(lose_timer)
 
-	print("Spawns found:", spawns.size())
-	print("GrabPoints found:", grab_points.size())
+	#print("Spawns found:", spawns.size())
+	#print("GrabPoints found:", grab_points.size())
 
 	_schedule_next_wave()
 
@@ -54,7 +54,7 @@ func _schedule_next_wave():
 	tw.finished.connect(_spawn_wave)
 
 func _spawn_wave():
-	print("spawning!")
+	#print("spawning!")
 	# 1–2 tentacles
 	var want = randi_range(spawn_count_min, spawn_count_max)
 
@@ -111,7 +111,9 @@ func _pick_random_of_three_nearest_free_grab(from_pos: Vector3) -> GrabPoint:
 	for p in grab_points:
 		if not p.is_free():
 			continue
-		var d = from_pos.distance_to(p.global_position)
+		var better_position = p.global_position
+		better_position.y = 4.0
+		var d = from_pos.distance_to(better_position)
 		candidates.append([d, p])
 
 	if candidates.is_empty():
@@ -149,14 +151,15 @@ func _check_lose_condition():
 	var captured = _count_captured()
 	if captured >= needed_to_lose:
 		if lose_timer.is_stopped():
-			print("WARNING: %d points captured. Starting lose timer..." % captured)
+			#print("WARNING: %d points captured. Starting lose timer..." % captured)
 			lose_timer.start()
 	else:
 		# if it dropped below 7 — cancel the lose timer
 		if not lose_timer.is_stopped():
-			print("INFO: captured dropped to %d. Lose timer cancelled." % captured)
+			#print("INFO: captured dropped to %d. Lose timer cancelled." % captured)
 			lose_timer.stop()
 
 func _on_lose_timer_timeout():
 	# For now the finale is just in the console
-	print("GAME OVER: Kraken captured %d points for %0.1f seconds!" % [needed_to_lose, lose_delay])
+	#print("GAME OVER: Kraken captured %d points for %0.1f seconds!" % [needed_to_lose, lose_delay])
+	Global.game_over = true

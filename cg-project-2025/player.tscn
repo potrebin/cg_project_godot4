@@ -61,6 +61,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
 target_position = Vector3(0, 0, -7)
 collide_with_areas = true
 
+[node name="AxeRayCast" type="RayCast3D" parent="LookAround"]
+target_position = Vector3(0, 0, -5)
+collision_mask = 4
+collide_with_areas = true
+
 [node name="Camera3D" type="Camera3D" parent="LookAround"]
 cull_mask = 1048573
 current = true

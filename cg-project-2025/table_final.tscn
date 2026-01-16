@@ -1,16 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://cfnqdsc320g8j"]
+[gd_scene load_steps=4 format=3 uid="uid://cfnqdsc320g8j"]
 
 [ext_resource type="PackedScene" uid="uid://ck3dnkhdwlrl6" path="res://Models/Captain_table2.glb" id="1_tvyah"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rnbj0"]
-size = Vector3(4.929489, 1.690918, 2.9830933)
+size = Vector3(4.7541504, 0.203125, 2.7558594)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tvyah"]
+size = Vector3(3.6904297, 1.2685547, 1.9755859)
 
 [node name="Table" type="StaticBody3D"]
+collision_layer = 5
 
 [node name="Captain_table2" parent="." instance=ExtResource("1_tvyah")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2103622, 0, 0.789078)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.20083094, 0.07570583, 0.80182916)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.20083094, 0.7983621, 0.80182916)
 shape = SubResource("BoxShape3D_rnbj0")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.20083094, -0.009223044, 0.80182916)
+shape = SubResource("BoxShape3D_tvyah")

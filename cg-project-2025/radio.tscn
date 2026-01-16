@@ -1,8 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://dwkgp763hk1nm"]
+[gd_scene load_steps=3 format=3 uid="uid://vkey8enssriy"]
 
 [ext_resource type="PackedScene" uid="uid://b2bftf4m4v8ys" path="res://Models/radio.glb" id="1_flxc7"]
 
-[node name="Radio" type="Node3D"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_flxc7"]
+size = Vector3(0.75490725, 0.4402771, 0.3125)
+
+[node name="Radio" type="StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.048140228, 0.029770374, 0.0118634105)
+shape = SubResource("BoxShape3D_flxc7")
 
 [node name="Radio Model" parent="." instance=ExtResource("1_flxc7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.054622173, -0.31173658, 0.0118634105)
